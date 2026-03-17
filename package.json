@@ -1,0 +1,19 @@
+{
+  "name": "novake-galaxy",
+  "version": "1.0.0",
+  "description": "NovaKΞ — NOVA GALAXY (galaxy.novake.gg)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "compression": "^1.7.5",
+    "express": "^4.21.0",
+    "helmet": "^8.1.0",
+    "http-proxy-middleware": "^3.0.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
