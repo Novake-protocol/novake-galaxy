@@ -1227,6 +1227,155 @@ img{max-width:100%;display:block}
   }
 }
 
+
+/* ═══ MY NETWORK (Referral Tree) ═══ */
+.sr-network { max-width: 620px; margin: 0 auto 56px; }
+.sr-network-card {
+  background: var(--card-bg, rgba(17,17,24,.70));
+  border: 1px solid var(--sr-border, var(--card-border, rgba(255,255,255,.07)));
+  border-radius: 20px;
+  padding: 32px 28px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  text-align: center;
+  transition: border-color .3s ease;
+}
+.sr-network-card:hover { border-color: var(--sr-border-active, var(--gold-border)); }
+.sr-network-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--sr-text-secondary, var(--text-muted));
+  margin-bottom: 20px;
+}
+.sr-network-input-wrap { display: flex; gap: 12px; margin-bottom: 24px; }
+.sr-network-input {
+  flex: 1; padding: 14px 18px;
+  background: rgba(0,0,0,.3);
+  border: 1px solid var(--sr-border, var(--card-border));
+  border-radius: 12px;
+  color: var(--text); font-family: var(--font-mono); font-size: 15px;
+  outline: none; transition: all .25s;
+}
+.sr-network-input::placeholder { color: var(--sr-text-muted, var(--text-muted)); }
+.sr-network-input:focus { border-color: var(--gold-border); box-shadow: 0 0 20px rgba(212,168,67,.08); }
+.sr-network-btn {
+  padding: 14px 24px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--void); font-family: var(--font-display); font-size: 13px; font-weight: 700;
+  border: none; border-radius: 12px; cursor: pointer;
+  transition: all .3s; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap;
+}
+.sr-network-btn:hover { box-shadow: 0 4px 20px var(--gold-glow); transform: translateY(-2px); }
+.sr-network-btn:disabled { opacity: .5; cursor: wait; transform: none; box-shadow: none; }
+.sr-network-result { display: none; }
+.sr-network-result.show { display: block; animation: fadeIn .5s ease; }
+.net-root {
+  background: rgba(212,168,67,.06);
+  border: 1px solid var(--gold-border);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  text-align: left;
+}
+.net-root-header {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.net-root-code {
+  font-family: var(--font-mono);
+  font-size: 18px; font-weight: 700;
+  color: var(--gold);
+}
+.net-root-badge {
+  display: inline-block; padding: 3px 10px;
+  border-radius: 6px; font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1px;
+  background: rgba(212,168,67,.12); color: var(--gold);
+}
+.net-root-stats {
+  font-size: 13px; color: var(--text-dim);
+  font-family: var(--font-mono);
+}
+.net-directs { text-align: left; }
+.net-direct {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 12px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.net-direct:hover { border-color: rgba(212,168,67,.15); }
+.net-direct-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+  gap: 10px;
+}
+.net-direct-info {
+  display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0;
+}
+.net-direct-code {
+  font-family: var(--font-mono); font-size: 14px; font-weight: 600;
+  color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.net-direct-stars {
+  font-family: var(--font-mono); font-size: 13px; color: var(--gold);
+  white-space: nowrap;
+}
+.net-direct-badge {
+  display: inline-block; padding: 2px 8px;
+  border-radius: 4px; font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .5px;
+  background: rgba(255,255,255,.06); color: var(--text-dim);
+}
+.net-direct-badge.recruiter { background: rgba(212,168,67,.1); color: var(--gold); }
+.net-direct-badge.commander { background: rgba(103,0,211,.15); color: var(--purple-light); }
+.net-direct-badge.admiral { background: rgba(0,240,255,.1); color: var(--cyan); }
+.net-direct-badge.legend { background: rgba(255,215,0,.15); color: #FFD700; }
+.net-expand-btn {
+  font-size: 12px; color: var(--text-muted); background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08); border-radius: 6px;
+  padding: 4px 10px; cursor: pointer; white-space: nowrap;
+  transition: all .2s; font-family: var(--font-mono);
+}
+.net-expand-btn:hover { background: rgba(212,168,67,.1); border-color: var(--gold-border); color: var(--gold); }
+.net-subs {
+  display: none;
+  padding: 0 16px 14px 32px;
+  border-top: 1px solid rgba(255,255,255,.04);
+}
+.net-subs.show { display: block; animation: fadeIn .3s ease; }
+.net-sub {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 0;
+  font-size: 13px;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+}
+.net-sub::before { content: '└─'; color: var(--text-muted); font-size: 12px; }
+.net-sub-code { color: var(--text); }
+.net-sub-stars { color: var(--gold); }
+.net-empty {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+.net-empty-icon { font-size: 32px; margin-bottom: 12px; }
+@media (max-width: 600px) {
+  .sr-network-input-wrap { flex-direction: column; }
+  .sr-network-card { padding: 28px 20px; }
+  .net-root { padding: 16px; }
+  .net-root-header { gap: 8px; }
+  .net-root-code { font-size: 16px; }
+  .net-direct-header { padding: 12px 14px; }
+  .net-subs { padding: 0 14px 12px 24px; }
+}
+
 /* ════════════════════════════════════════════════════════════════════
    END STAR RUSH AAA UPGRADE
    ════════════════════════════════════════════════════════════════════ */
@@ -1696,6 +1845,21 @@ img{max-width:100%;display:block}
         </div>
       </div>
 
+
+      <!-- MY NETWORK (Referral Tree) -->
+      <div class="sr-network">
+        <div class="sr-network-card">
+          <div class="sr-network-title">🌐 <span data-i18n="net.title">MI RED</span></div>
+          <div class="sr-network-input-wrap">
+            <input type="text" class="sr-network-input" id="sr-network-code" autocomplete="off" spellcheck="false" data-i18n-placeholder="net.placeholder" placeholder="Tu código / apodo...">
+            <button class="sr-network-btn" id="sr-network-btn" onclick="checkNetwork()" data-i18n="net.btn">VER RED 🌐</button>
+          </div>
+          <div class="sr-network-result" id="sr-network-result">
+            <div id="sr-network-tree"></div>
+          </div>
+        </div>
+      </div>
+
       <!-- HOW IT WORKS -->
       <div class="sr-how">
         <div class="sr-how-title" data-i18n="dr.howTitle">&#128161; HOW IT WORKS</div>
@@ -1938,6 +2102,15 @@ const T = {
     'dr.step3Desc': 'Convert your stars into real USDC. Min 1,000 stars.',
     'dr.refgenTitle': 'YOUR REFERRAL LINK',
     'dr.refCopy': 'Copy',
+    'net.title': 'MY NETWORK',
+    'net.placeholder': 'Your code / nickname...',
+    'net.btn': 'VIEW NETWORK \uD83C\uDF10',
+    'net.directs': 'directs',
+    'net.subsIn': 'in G2',
+    'net.expand': 'sub-referrals',
+    'net.collapse': 'collapse',
+    'net.empty': 'No referrals yet. Share your link to build your network!',
+    'net.notFound': 'Code not found.',
     'dr.notFound': 'Code not found. Vote first to get your referral code!',
     'dr.lbNone': 'No stars yet. Be the first to share!',
     'sr.countdown': '2X MULTIPLIER ends in',
@@ -2092,6 +2265,15 @@ const T = {
     'dr.step3Desc': 'Converta suas estrelas em USDC real. M\u00EDnimo 1.000 estrelas.',
     'dr.refgenTitle': 'SEU LINK DE REFER\u00CANCIA',
     'dr.refCopy': 'Copiar',
+    'net.title': 'MINHA REDE',
+    'net.placeholder': 'Seu c\u00F3digo / apelido...',
+    'net.btn': 'VER REDE \uD83C\uDF10',
+    'net.directs': 'diretos',
+    'net.subsIn': 'em G2',
+    'net.expand': 'sub-referidos',
+    'net.collapse': 'fechar',
+    'net.empty': 'Nenhum referido ainda. Compartilhe seu link para construir sua rede!',
+    'net.notFound': 'C\u00F3digo n\u00E3o encontrado.',
     'dr.notFound': 'C\u00F3digo n\u00E3o encontrado. Vote primeiro para receber seu c\u00F3digo!',
     'dr.lbNone': 'Nenhuma estrela ainda. Seja o primeiro a compartilhar!',
     'sr.countdown': 'MULTIPLICADOR 2X termina em',
@@ -2246,6 +2428,15 @@ const T = {
     'dr.step3Desc': 'Convierte tus estrellas en USDC real. M\u00EDnimo 1.000 estrellas.',
     'dr.refgenTitle': 'TU LINK DE REFERENCIA',
     'dr.refCopy': 'Copiar',
+    'net.title': 'MI RED',
+    'net.placeholder': 'Tu c\u00F3digo / apodo...',
+    'net.btn': 'VER RED \uD83C\uDF10',
+    'net.directs': 'directos',
+    'net.subsIn': 'en G2',
+    'net.expand': 'sub-referidos',
+    'net.collapse': 'cerrar',
+    'net.empty': '\u00A1A\u00FAn no hay referidos. \u00A1Comparte tu enlace para construir tu red!',
+    'net.notFound': 'C\u00F3digo no encontrado.',
     'dr.notFound': '\u00A1C\u00F3digo no encontrado. \u00A1Vota primero para obtener tu c\u00F3digo!',
     'dr.lbNone': '\u00A1A\u00FAn no hay estrellas. \u00A1S\u00E9 el primero en compartir!',
     'sr.countdown': 'MULTIPLICADOR 2X termina en',
@@ -3529,6 +3720,125 @@ document.addEventListener('DOMContentLoaded', function() {
     if (multCard) multCard.style.display = 'none';
   });
 })();
+
+// ═══════════════════════════════════════════
+//  NETWORK DASHBOARD (Referral Tree)
+// ═══════════════════════════════════════════
+
+function checkNetwork() {
+  var codeInput = document.getElementById('sr-network-code');
+  var btn = document.getElementById('sr-network-btn');
+  var resultEl = document.getElementById('sr-network-result');
+  var treeEl = document.getElementById('sr-network-tree');
+  var code = (codeInput.value || '').trim();
+
+  if (!code) { codeInput.focus(); return; }
+
+  btn.disabled = true;
+  btn.textContent = '...';
+  resultEl.classList.remove('show');
+
+  fetch('/api/diamonds/' + encodeURIComponent(code) + '/network')
+    .then(function(r) {
+      if (r.status === 404) throw new Error('not_found');
+      if (!r.ok) throw new Error('server_error');
+      return r.json();
+    })
+    .then(function(data) {
+      treeEl.innerHTML = renderNetworkTree(data);
+      resultEl.classList.add('show');
+    })
+    .catch(function(err) {
+      if (err.message === 'not_found') {
+        treeEl.innerHTML = '<div class="net-empty"><div class="net-empty-icon">🔍</div>' + t('net.notFound') + '</div>';
+      } else {
+        treeEl.innerHTML = '<div class="net-empty"><div class="net-empty-icon">⚠️</div>Error loading network</div>';
+      }
+      resultEl.classList.add('show');
+    })
+    .finally(function() {
+      btn.disabled = false;
+      btn.textContent = t('net.btn');
+    });
+}
+
+function renderNetworkTree(data) {
+  var badgeLabel = data.badge !== 'none' ? data.badge.toUpperCase() : '';
+  var totalG2 = 0;
+  data.directs.forEach(function(d) { totalG2 += (d.subs ? d.subs.length : 0); });
+
+  var html = '<div class="net-root">';
+  html += '<div class="net-root-header">';
+  html += '<span class="net-root-code">' + esc(data.code) + '</span>';
+  html += '<span class="net-direct-stars">⭐ ' + fmtNum(data.total_stars) + '</span>';
+  if (badgeLabel) html += '<span class="net-root-badge">' + badgeLabel + '</span>';
+  html += '<span style="font-size:12px;color:var(--text-muted);font-family:var(--font-mono)">#' + data.rank + '</span>';
+  html += '</div>';
+  html += '<div class="net-root-stats">👥 ' + data.direct_count + ' ' + t('net.directs') + ' · ' + totalG2 + '⭐ ' + t('net.subsIn') + '</div>';
+  html += '</div>';
+
+  if (!data.directs || data.directs.length === 0) {
+    html += '<div class="net-empty"><div class="net-empty-icon">🌌</div>' + t('net.empty') + '</div>';
+    return html;
+  }
+
+  html += '<div class="net-directs">';
+  data.directs.forEach(function(d, i) {
+    var hasSubs = d.subs && d.subs.length > 0;
+    var badgeCls = d.badge !== 'none' ? ' ' + d.badge : '';
+    html += '<div class="net-direct">';
+    html += '<div class="net-direct-header" onclick="toggleNetSubs(this)">';
+    html += '<div class="net-direct-info">';
+    html += '<span class="net-direct-code">' + esc(d.code) + '</span>';
+    html += '<span class="net-direct-stars">⭐ ' + fmtNum(d.stars) + '</span>';
+    if (d.badge !== 'none') html += '<span class="net-direct-badge' + badgeCls + '">' + d.badge + '</span>';
+    html += '</div>';
+    if (hasSubs) {
+      html += '<span class="net-expand-btn" data-count="' + d.subs.length + '">▼ ' + d.subs.length + ' ' + t('net.expand') + '</span>';
+    }
+    html += '</div>';
+
+    if (hasSubs) {
+      html += '<div class="net-subs" id="net-subs-' + i + '">';
+      d.subs.forEach(function(s) {
+        html += '<div class="net-sub"><span class="net-sub-code">' + esc(s.code) + '</span> <span class="net-sub-stars">⭐ ' + fmtNum(s.stars) + '</span></div>';
+      });
+      html += '</div>';
+    }
+    html += '</div>';
+  });
+  html += '</div>';
+
+  return html;
+}
+
+function toggleNetSubs(headerEl) {
+  var subs = headerEl.nextElementSibling;
+  if (!subs || !subs.classList.contains('net-subs')) return;
+  var btn = headerEl.querySelector('.net-expand-btn');
+  var isOpen = subs.classList.contains('show');
+  subs.classList.toggle('show');
+  if (btn) {
+    var count = btn.getAttribute('data-count') || '0';
+    btn.textContent = isOpen
+      ? '▼ ' + count + ' ' + t('net.expand')
+      : '▲ ' + t('net.collapse');
+  }
+}
+
+function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function fmtNum(n) { return (n || 0).toLocaleString(); }
+
+// Auto-fill network code from balance input
+document.addEventListener('DOMContentLoaded', function() {
+  var balCode = document.getElementById('sr-balance-code');
+  var netCode = document.getElementById('sr-network-code');
+  if (balCode && netCode) {
+    balCode.addEventListener('change', function() {
+      if (!netCode.value && balCode.value) netCode.value = balCode.value;
+    });
+  }
+});
 
 </script>
 </body>
