@@ -1587,7 +1587,7 @@ img{max-width:100%;display:block}
 
           <!-- Eclipse -->
           <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(103,232,249,0.15);border-radius:12px;overflow:hidden;text-align:center">
-            <img src="/assets/ships/eclipse/eclipse_hero.png" alt="Eclipse" style="width:100%;aspect-ratio:1;object-fit:cover" loading="lazy">
+            <img src="/assets/ships/eclipse/eclipse_hd.jpg" alt="Eclipse" style="width:100%;aspect-ratio:1;object-fit:cover" loading="lazy">
             <div style="padding:8px 6px 12px">
               <div style="font-weight:700;color:var(--eclipse-c);font-size:clamp(12px,2.5vw,16px);letter-spacing:1px">ECLIPSE</div>
               <div style="margin:8px auto 0;max-width:90%">
@@ -1601,7 +1601,7 @@ img{max-width:100%;display:block}
 
           <!-- Aurora -->
           <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(245,158,11,0.15);border-radius:12px;overflow:hidden;text-align:center">
-            <img src="/assets/ships/aurora/aurora_hero.png" alt="Aurora" style="width:100%;aspect-ratio:1;object-fit:cover" loading="lazy">
+            <img src="/assets/ships/aurora/aurora_hd.jpg" alt="Aurora" style="width:100%;aspect-ratio:1;object-fit:cover" loading="lazy">
             <div style="padding:8px 6px 12px">
               <div style="font-weight:700;color:var(--aurora-c);font-size:clamp(12px,2.5vw,16px);letter-spacing:1px">AURORA</div>
               <div style="margin:8px auto 0;max-width:90%">
@@ -1615,7 +1615,7 @@ img{max-width:100%;display:block}
 
           <!-- Kraken -->
           <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(167,139,250,0.15);border-radius:12px;overflow:hidden;text-align:center">
-            <img src="/assets/ships/kraken/kraken_hero.png" alt="Kraken" style="width:100%;aspect-ratio:1;object-fit:cover" loading="lazy">
+            <img src="/assets/ships/kraken/kraken_hd.jpg" alt="Kraken" style="width:100%;aspect-ratio:1;object-fit:cover" loading="lazy">
             <div style="padding:8px 6px 12px">
               <div style="font-weight:700;color:var(--kraken-c);font-size:clamp(12px,2.5vw,16px);letter-spacing:1px">KRAKEN</div>
               <div style="margin:8px auto 0;max-width:90%">
@@ -1795,7 +1795,7 @@ img{max-width:100%;display:block}
             <div class="confirm-item-value" id="conf-ship"></div>
           </div>
           <div class="confirm-item">
-            <div class="confirm-item-label" data-i18n="confirm.nickname">Callsign</div>
+            <div class="confirm-item-label" data-i18n="confirm.nickname">Nickname</div>
             <div class="confirm-item-value" id="conf-nickname"></div>
           </div>
           <div class="confirm-item" id="conf-wallet-item" style="display:none">
@@ -2250,7 +2250,7 @@ const T = {
     total_votes: '{n} commanders have voted',
     'vote.secretMsg': '\u2014 results hidden until final hour \u2014',
     'confirm.title': 'YOUR VOTE HAS BEEN RECORDED',
-    'confirm.ship': 'Ship', 'confirm.nickname': 'Callsign', 'confirm.wallet': 'Wallet',
+    'confirm.ship': 'Ship', 'confirm.nickname': 'Nickname', 'confirm.wallet': 'Wallet',
     'confirm.saveCode': "Save this code \u2014 you'll need it to connect your wallet",
     'confirm.web3msg': 'In the coming days, learn how to set up your Web3 wallet to unlock exclusive benefits for Genesis Voters.',
     'ref.title': 'REFERRAL MISSION \u2014 Win a Ship NFT',
@@ -2434,7 +2434,7 @@ const T = {
     total_votes: '{n} comandantes votaram',
     'vote.secretMsg': '\u2014 resultados ocultos at\u00E9 a \u00FAltima hora \u2014',
     'confirm.title': 'SEU VOTO FOI REGISTRADO',
-    'confirm.ship': 'Nave', 'confirm.nickname': 'Callsign', 'confirm.wallet': 'Wallet',
+    'confirm.ship': 'Nave', 'confirm.nickname': 'Nickname', 'confirm.wallet': 'Wallet',
     'confirm.saveCode': 'Salve este c\u00F3digo \u2014 voc\u00EA vai precisar dele para conectar sua wallet',
     'confirm.web3msg': 'Nos pr\u00F3ximos dias, aprenda como configurar sua wallet Web3 para desbloquear benef\u00EDcios exclusivos para Genesis Voters.',
     'ref.title': 'MISS\u00C3O REFERRAL \u2014 Ganhe uma Ship NFT',
@@ -2618,7 +2618,7 @@ const T = {
     total_votes: '{n} comandantes han votado',
     'vote.secretMsg': '\u2014 resultados ocultos hasta la \u00FAltima hora \u2014',
     'confirm.title': 'TU VOTO HA SIDO REGISTRADO',
-    'confirm.ship': 'Nave', 'confirm.nickname': 'Callsign', 'confirm.wallet': 'Wallet',
+    'confirm.ship': 'Nave', 'confirm.nickname': 'Nickname', 'confirm.wallet': 'Wallet',
     'confirm.saveCode': 'Guarda este c\u00F3digo \u2014 lo necesitar\u00E1s para conectar tu wallet',
     'confirm.web3msg': 'En los pr\u00F3ximos d\u00EDas, aprende c\u00F3mo configurar tu wallet Web3 para desbloquear beneficios exclusivos para Genesis Voters.',
     'ref.title': 'MISI\u00D3N REFERRAL \u2014 Gana una Ship NFT',
@@ -2818,9 +2818,9 @@ function setConfShipVisual(shipName) {
   if (!img || !container) return;
   var s = (shipName || '').toLowerCase();
   var shipAssets = {
-    eclipse: '/assets/ships/eclipse/eclipse_hero.png',
-    aurora: '/assets/ships/aurora/aurora_hero.png',
-    kraken: '/assets/ships/kraken/kraken_hero.png'
+    eclipse: '/assets/ships/eclipse/eclipse_hd.jpg',
+    aurora: '/assets/ships/aurora/aurora_hd.jpg',
+    kraken: '/assets/ships/kraken/kraken_hd.jpg'
   };
   if (shipAssets[s]) {
     img.src = shipAssets[s];
