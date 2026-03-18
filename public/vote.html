@@ -1562,11 +1562,77 @@ img{max-width:100%;display:block}
   </section>
 
   <div class="container">
-    <!-- ═══ STATE 0: GATEWAY (simplified — go straight to nickname) ═══ -->
+    <!-- ═══ STATE 0: GATEWAY — Ships + Stats + Countdown ═══ -->
     <div id="state-gateway" class="state active">
-      <div style="text-align:center;max-width:480px;margin:0 auto">
-        <p style="font-size:15px;color:var(--text-dim);margin-top:32px" data-i18n="gateway.startSub">Choose your nickname and vote — no wallet needed</p>
-        <button class="confirm-btn enabled" onclick="handleStartVoting()" style="margin-top:24px" data-i18n="gateway.startBtn">ELEGIR MI NAVE &#8594;</button>
+      <div style="text-align:center;max-width:640px;margin:0 auto;padding:0 16px">
+
+        <!-- COUNTDOWN (mirrors hero countdown) -->
+        <div id="gw-countdown" style="margin-bottom:16px">
+          <div class="countdown-wrap">
+            <div class="cd-unit"><span class="cd-num" id="gw-cd-days">00</span><span class="cd-label">DAYS</span></div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit"><span class="cd-num" id="gw-cd-hrs">00</span><span class="cd-label">HRS</span></div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit"><span class="cd-num" id="gw-cd-min">00</span><span class="cd-label">MIN</span></div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit"><span class="cd-num" id="gw-cd-sec">00</span><span class="cd-label">SEC</span></div>
+          </div>
+        </div>
+
+        <h2 style="font-size:clamp(16px,3.5vw,24px);margin:24px 0 8px;letter-spacing:1px" data-i18n="gateway.title">THE FLEET AWAITS YOUR VOTE</h2>
+        <p style="font-size:14px;color:var(--text-dim);margin-bottom:24px" data-i18n="gateway.sub">Three ships. One will lead the fleet. Your vote decides.</p>
+
+        <!-- SHIP PREVIEW CARDS -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px" id="gw-ships-grid">
+
+          <!-- Eclipse -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(103,232,249,0.15);border-radius:12px;overflow:hidden;text-align:center">
+            <img src="/assets/ships/eclipse/eclipse_hero.png" alt="Eclipse" style="width:100%;aspect-ratio:1;object-fit:cover" loading="lazy">
+            <div style="padding:8px 6px 12px">
+              <div style="font-weight:700;color:var(--eclipse-c);font-size:clamp(12px,2.5vw,16px);letter-spacing:1px">ECLIPSE</div>
+              <div style="margin:8px auto 0;max-width:90%">
+                <div style="height:5px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden">
+                  <div id="gw-bar-eclipse" style="height:100%;border-radius:3px;background:linear-gradient(90deg,var(--eclipse-c),rgba(103,232,249,0.4));width:0%;transition:width .8s ease"></div>
+                </div>
+                <div id="gw-pct-eclipse" style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim);margin-top:4px">0%</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Aurora -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(245,158,11,0.15);border-radius:12px;overflow:hidden;text-align:center">
+            <img src="/assets/ships/aurora/aurora_hero.png" alt="Aurora" style="width:100%;aspect-ratio:1;object-fit:cover" loading="lazy">
+            <div style="padding:8px 6px 12px">
+              <div style="font-weight:700;color:var(--aurora-c);font-size:clamp(12px,2.5vw,16px);letter-spacing:1px">AURORA</div>
+              <div style="margin:8px auto 0;max-width:90%">
+                <div style="height:5px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden">
+                  <div id="gw-bar-aurora" style="height:100%;border-radius:3px;background:linear-gradient(90deg,var(--aurora-c),rgba(245,158,11,0.4));width:0%;transition:width .8s ease"></div>
+                </div>
+                <div id="gw-pct-aurora" style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim);margin-top:4px">0%</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kraken -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(167,139,250,0.15);border-radius:12px;overflow:hidden;text-align:center">
+            <img src="/assets/ships/kraken/kraken_hero.png" alt="Kraken" style="width:100%;aspect-ratio:1;object-fit:cover" loading="lazy">
+            <div style="padding:8px 6px 12px">
+              <div style="font-weight:700;color:var(--kraken-c);font-size:clamp(12px,2.5vw,16px);letter-spacing:1px">KRAKEN</div>
+              <div style="margin:8px auto 0;max-width:90%">
+                <div style="height:5px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden">
+                  <div id="gw-bar-kraken" style="height:100%;border-radius:3px;background:linear-gradient(90deg,var(--kraken-c),rgba(167,139,250,0.4));width:0%;transition:width .8s ease"></div>
+                </div>
+                <div id="gw-pct-kraken" style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim);margin-top:4px">0%</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div id="gw-total-votes" style="font-size:13px;color:var(--text-dim);margin-bottom:16px"></div>
+
+        <p style="font-size:14px;color:var(--text-dim);margin-bottom:8px" data-i18n="gateway.startSub">Choose your nickname and vote — no wallet needed</p>
+        <button class="confirm-btn enabled" onclick="handleStartVoting()" style="margin-top:8px;font-size:16px;padding:14px 32px" data-i18n="gateway.startBtn">ELEGIR MI NAVE &#8594;</button>
       </div>
     </div>
 
@@ -3363,10 +3429,16 @@ function updateBars() {
   var total = stats.total || 1;
   ['eclipse', 'aurora', 'kraken'].forEach(function(ship) {
     var pct = ((stats[ship] || 0) / total * 100).toFixed(1);
+    // Vote page bars
     var bar = document.getElementById('bar-' + ship);
     var pctEl = document.getElementById('pct-' + ship);
     if (bar) bar.style.width = pct + '%';
     if (pctEl) pctEl.textContent = pct + '% (' + (stats[ship] || 0) + ')';
+    // Gateway preview bars
+    var gwBar = document.getElementById('gw-bar-' + ship);
+    var gwPct = document.getElementById('gw-pct-' + ship);
+    if (gwBar) gwBar.style.width = pct + '%';
+    if (gwPct) gwPct.textContent = pct + '%';
   });
 }
 
@@ -3374,6 +3446,11 @@ function updateTotalVotes() {
   var el = document.getElementById('total-votes');
   if (el && stats.total > 0) {
     el.innerHTML = '<strong>' + stats.total.toLocaleString() + '</strong> ' + t('total_votes').replace('{n}', '');
+  }
+  // Gateway total
+  var gwEl = document.getElementById('gw-total-votes');
+  if (gwEl && stats.total > 0) {
+    gwEl.innerHTML = '&#9734; <strong>' + stats.total.toLocaleString() + '</strong> votes cast';
   }
 }
 
@@ -3912,7 +3989,7 @@ function copyDrRefLink() {
 // ═══════════════════════════════════════════════════
 //  COUNTDOWN
 // ═══════════════════════════════════════════════════
-var DEADLINE = new Date('2026-04-01T02:59:00Z').getTime(); // Extended to April 1
+var DEADLINE = new Date('2026-03-21T08:10:00Z').getTime(); // 72h from Mar 18 08:10 UTC
 
 function updateCountdown() {
   var now = Date.now();
@@ -3927,14 +4004,15 @@ function updateCountdown() {
   var h = Math.floor((diff % 86400000) / 3600000);
   var m = Math.floor((diff % 3600000) / 60000);
   var s = Math.floor((diff % 60000) / 1000);
-  var de = document.getElementById('cd-days');
-  var he = document.getElementById('cd-hrs');
-  var me = document.getElementById('cd-min');
-  var se = document.getElementById('cd-sec');
-  if (de) de.textContent = String(d).padStart(2, '0');
-  if (he) he.textContent = String(h).padStart(2, '0');
-  if (me) me.textContent = String(m).padStart(2, '0');
-  if (se) se.textContent = String(s).padStart(2, '0');
+  var vals = { days: d, hrs: h, min: m, sec: s };
+  ['cd-days','cd-hrs','cd-min','cd-sec'].forEach(function(id) {
+    var key = id.replace('cd-','');
+    var el = document.getElementById(id);
+    var gwEl = document.getElementById('gw-' + id);
+    var v = String(vals[key]).padStart(2, '0');
+    if (el) el.textContent = v;
+    if (gwEl) gwEl.textContent = v;
+  });
 }
 
 // ═══════════════════════════════════════════════════
