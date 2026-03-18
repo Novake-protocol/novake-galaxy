@@ -1380,6 +1380,25 @@ img{max-width:100%;display:block}
    END STAR RUSH AAA UPGRADE
    ════════════════════════════════════════════════════════════════════ */
 
+
+/* ═══ MEUS SPOILS ═══ */
+.sr-spoils{max-width:580px;margin:0 auto 56px}
+.sr-spoils-card{background:var(--card-bg);border:1px solid var(--gold-border);border-radius:20px;padding:32px 28px;backdrop-filter:blur(12px);text-align:center}
+.sr-spoils-title{font-family:var(--font-display);font-size:16px;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:20px}
+.sr-spoils-input{width:100%;padding:14px 18px;background:rgba(0,0,0,.3);border:1px solid var(--card-border);border-radius:12px;color:var(--text);font-family:var(--font-mono);font-size:14px;outline:none;transition:all .25s;margin-bottom:12px}
+.sr-spoils-input:focus{border-color:var(--gold-border);box-shadow:0 0 20px rgba(212,168,67,.08)}
+.sr-spoils-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--void);font-family:var(--font-display);font-size:14px;font-weight:700;border:none;border-radius:12px;cursor:pointer;transition:all .3s;text-transform:uppercase;letter-spacing:1px}
+.sr-spoils-btn:hover{box-shadow:0 4px 20px var(--gold-glow);transform:translateY(-2px)}
+.sr-spoils-btn:disabled{opacity:.5;cursor:wait;transform:none}
+.sr-spoils-dashboard{display:none}
+.sr-spoils-dashboard.show{display:block;animation:fadeIn .5s ease}
+.sr-spoils-stats{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.sr-spoils-stat{text-align:center;padding:12px 16px;background:rgba(0,0,0,.2);border-radius:12px;min-width:100px}
+.sr-spoils-stat-val{font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--gold)}
+.sr-spoils-stat-label{font-size:11px;color:var(--text-dim);margin-top:4px}
+.sr-spoils-pending{font-family:var(--font-mono);font-size:28px;font-weight:700;color:var(--green);margin:16px 0 8px}
+.sr-spoils-section{margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.06)}
+
 /* ═══ JOIN THE FLEET ═══ */
 .jtf-section{padding:80px 0 60px;position:relative}
 .jtf-section::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:1px;background:linear-gradient(90deg,transparent,var(--gold-border),transparent)}
@@ -1906,6 +1925,47 @@ img{max-width:100%;display:block}
     </div>
   </section>
 
+<!-- MEUS SPOILS -->
+<div class="sr-spoils">
+  <div class="sr-spoils-card">
+    <div class="sr-spoils-title">💰 <span data-i18n="spoils.title">MEUS SPOILS</span></div>
+    <div id="sr-spoils-entry">
+      <input type="text" class="sr-spoils-input" id="sr-spoils-code" autocomplete="off" spellcheck="false" placeholder="Claim Code (ex: NOVA-ORBIT-VEGA-3)" data-i18n-placeholder="spoils.codePlaceholder" />
+      <button class="sr-spoils-btn" onclick="loadSpoilsDashboard()" data-i18n="spoils.access">ACESSAR MEUS SPOILS 💰</button>
+    </div>
+    <div class="sr-spoils-dashboard" id="sr-spoils-dashboard">
+      <div class="sr-spoils-stats">
+        <div class="sr-spoils-stat"><div class="sr-spoils-stat-val" id="sp-total">0⭐</div><div class="sr-spoils-stat-label" data-i18n="spoils.statTotal">Total</div></div>
+        <div class="sr-spoils-stat"><div class="sr-spoils-stat-val" id="sp-available">0⭐</div><div class="sr-spoils-stat-label" data-i18n="spoils.statAvailable">Disponíveis</div></div>
+        <div class="sr-spoils-stat"><div class="sr-spoils-stat-val" id="sp-converted">0⭐</div><div class="sr-spoils-stat-label" data-i18n="spoils.statConverted">Convertidas</div></div>
+      </div>
+      <div class="sr-spoils-pending" id="sp-pending">$0.00</div>
+      <div style="font-size:12px;color:var(--text-dim);margin-bottom:16px" data-i18n="spoils.pendingLabel">Spoils aguardando resgate</div>
+
+      <!-- CONVERTER -->
+      <div class="sr-spoils-section" id="sp-convert-section" style="display:none">
+        <p style="color:var(--text-dim);font-size:13px;margin-bottom:10px" data-i18n="spoils.convertTitle">Converter Estrelas → Spoils</p>
+        <input type="number" class="sr-spoils-input" id="sp-stars-input" min="1000" placeholder="Min 1.000⭐" />
+        <div style="font-size:12px;color:var(--gold);margin:-6px 0 10px;font-family:var(--font-mono)" id="sp-usd-preview"></div>
+        <button class="sr-spoils-btn" onclick="convertStars()" data-i18n="spoils.convertBtn">CONVERTER PARA SPOILS</button>
+      </div>
+
+      <!-- VINCULAR WALLET -->
+      <div class="sr-spoils-section" id="sp-wallet-section" style="display:none">
+        <p style="color:var(--text-dim);font-size:13px;margin-bottom:10px" data-i18n="spoils.linkWalletTitle">Vincular Wallet para Resgatar</p>
+        <input type="text" class="sr-spoils-input" id="sp-wallet-input" placeholder="0x..." autocomplete="off" />
+        <button class="sr-spoils-btn" onclick="linkWallet()" data-i18n="spoils.linkWalletBtn">VINCULAR WALLET</button>
+      </div>
+
+      <!-- RESGATAR -->
+      <div class="sr-spoils-section" id="sp-claim-section" style="display:none">
+        <button class="sr-spoils-btn" id="sp-claim-btn" onclick="claimSpoils()" style="background:linear-gradient(135deg,#22C55E,#16A34A)">RESGATAR SPOILS → USDC</button>
+        <div class="claim-status" id="sp-claim-status"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
   <!-- ═══ JOIN THE FLEET ═══ -->
   <section class="jtf-section" id="join-fleet">
     <div class="container">
@@ -2138,6 +2198,18 @@ const T = {
     'share.xDrSuffix': ' #NovaKE #NovaGalaxy',
     'share.tgDr': '⭐ Star Rush! Vote for the most powerful ship \u2192 ',
     'share.waDr': '⭐ NovaK\u039E Star Rush! Vote & earn stars \u2192 ',
+    'spoils.title': 'MY SPOILS',
+    'spoils.codePlaceholder': 'Claim Code (e.g. NOVA-ORBIT-VEGA-3)',
+    'spoils.access': 'ACCESS MY SPOILS \ud83d\udcb0',
+    'spoils.statTotal': 'Total',
+    'spoils.statAvailable': 'Available',
+    'spoils.statConverted': 'Converted',
+    'spoils.pendingLabel': 'Spoils pending claim',
+    'spoils.convertTitle': 'Convert Stars \u2192 Spoils',
+    'spoils.convertBtn': 'CONVERT TO SPOILS',
+    'spoils.linkWalletTitle': 'Link Wallet to Claim',
+    'spoils.linkWalletBtn': 'LINK WALLET',
+    'spoils.notFound': 'Claim code not found.',
     'jtf.title': 'JOIN THE NOVAK\u039E CONSTELLATION',
     'jtf.subtitle': 'All the galaxy\u2019s gates in one place.',
     'jtf.site': 'Meet the protocol',
@@ -2301,6 +2373,18 @@ const T = {
     'share.xDrSuffix': ' #NovaKE #NovaGalaxy',
     'share.tgDr': '⭐ Star Rush! Vote na nave mais poderosa \u2192 ',
     'share.waDr': '⭐ NovaK\u039E Star Rush! Vote e ganhe estrelas \u2192 ',
+    'spoils.title': 'MEUS SPOILS',
+    'spoils.codePlaceholder': 'Claim Code (ex: NOVA-ORBIT-VEGA-3)',
+    'spoils.access': 'ACESSAR MEUS SPOILS \ud83d\udcb0',
+    'spoils.statTotal': 'Total',
+    'spoils.statAvailable': 'Dispon\u00edveis',
+    'spoils.statConverted': 'Convertidas',
+    'spoils.pendingLabel': 'Spoils aguardando resgate',
+    'spoils.convertTitle': 'Converter Estrelas \u2192 Spoils',
+    'spoils.convertBtn': 'CONVERTER PARA SPOILS',
+    'spoils.linkWalletTitle': 'Vincular Wallet para Resgatar',
+    'spoils.linkWalletBtn': 'VINCULAR WALLET',
+    'spoils.notFound': 'Claim code n\u00e3o encontrado.',
     'jtf.title': 'ENTRE NA CONSTELA\u00C7\u00C3O NOVAK\u039E',
     'jtf.subtitle': 'Todas as portas da gal\u00E1xia em um s\u00F3 lugar.',
     'jtf.site': 'Conhe\u00E7a o protocolo',
@@ -2464,6 +2548,18 @@ const T = {
     'share.xDrSuffix': ' #NovaKE #NovaGalaxy',
     'share.tgDr': '⭐ \u00A1Misión Interestelar! Vota por la nave m\u00E1s poderosa \u2192 ',
     'share.waDr': '⭐ NOVA GALAXY — Misión Interestelar! Vota y gana estrellas \u2192 ',
+    'spoils.title': 'MIS SPOILS',
+    'spoils.codePlaceholder': 'Claim Code (ej: NOVA-ORBIT-VEGA-3)',
+    'spoils.access': 'ACCEDER A MIS SPOILS \ud83d\udcb0',
+    'spoils.statTotal': 'Total',
+    'spoils.statAvailable': 'Disponibles',
+    'spoils.statConverted': 'Convertidas',
+    'spoils.pendingLabel': 'Spoils pendientes de cobro',
+    'spoils.convertTitle': 'Convertir Estrellas \u2192 Spoils',
+    'spoils.convertBtn': 'CONVERTIR A SPOILS',
+    'spoils.linkWalletTitle': 'Vincular Wallet para Cobrar',
+    'spoils.linkWalletBtn': 'VINCULAR WALLET',
+    'spoils.notFound': 'Claim code no encontrado.',
     'jtf.title': '\u00DANETE A LA CONSTELACI\u00D3N NOVAK\u039E',
     'jtf.subtitle': 'Todas las puertas de la galaxia en un solo lugar.',
     'jtf.site': 'Conoce el protocolo',
@@ -3839,6 +3935,102 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+// ═══ SPOILS DASHBOARD ═══
+var currentClaimCode = sessionStorage.getItem('nvk_claim_code') || '';
+var currentSpoilsData = null;
+
+if (currentClaimCode) {
+  var inp = document.getElementById('sr-spoils-code');
+  if (inp) inp.value = currentClaimCode;
+}
+
+async function loadSpoilsDashboard() {
+  var code = document.getElementById('sr-spoils-code').value.trim();
+  if (!code) return;
+  var btn = document.querySelector('[onclick="loadSpoilsDashboard()"]');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>';
+  try {
+    var res = await fetch('/api/diamonds/dashboard/' + encodeURIComponent(code));
+    if (!res.ok) { showToast(t('spoils.notFound'),'error'); btn.disabled=false; btn.textContent=t('spoils.access'); return; }
+    var data = await res.json();
+    currentClaimCode = code;
+    currentSpoilsData = data;
+    sessionStorage.setItem('nvk_claim_code', code);
+    renderSpoilsDashboard(data);
+  } catch(e) { showToast(t('error_server'),'error'); }
+  btn.disabled=false; btn.textContent=t('spoils.access');
+}
+
+function renderSpoilsDashboard(data) {
+  var avail = (data.total_stars||0) - (data.stars_converted||0);
+  document.getElementById('sp-total').textContent = (data.total_stars||0).toLocaleString() + '\u2b50';
+  document.getElementById('sp-available').textContent = avail.toLocaleString() + '\u2b50';
+  document.getElementById('sp-converted').textContent = (data.stars_converted||0).toLocaleString() + '\u2b50';
+  document.getElementById('sp-pending').textContent = '$' + (data.spoils_pending||0).toFixed(2);
+  document.getElementById('sr-spoils-dashboard').classList.add('show');
+  document.getElementById('sp-convert-section').style.display = avail >= 1000 ? '' : 'none';
+  document.getElementById('sp-wallet-section').style.display = !data.wallet_address ? '' : 'none';
+  document.getElementById('sp-claim-section').style.display = (data.spoils_pending > 0 && data.wallet_address) ? '' : 'none';
+  var claimBtn = document.getElementById('sp-claim-btn');
+  if (claimBtn) claimBtn.textContent = 'RESGATAR $' + (data.spoils_pending||0).toFixed(2) + ' SPOILS \u2192 USDC';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var starsInput = document.getElementById('sp-stars-input');
+  if (starsInput) starsInput.addEventListener('input', function() {
+    var v = parseInt(this.value)||0;
+    var preview = document.getElementById('sp-usd-preview');
+    if (preview) preview.textContent = v >= 1000 ? '= $' + calcUsd(v) + ' Spoils' : (v > 0 ? 'M\u00ednimo 1.000\u2b50' : '');
+  });
+  if (currentClaimCode) setTimeout(loadSpoilsDashboard, 500);
+});
+
+async function convertStars() {
+  var stars = parseInt(document.getElementById('sp-stars-input').value)||0;
+  if (stars < 1000) { showToast('M\u00ednimo 1.000\u2b50','error'); return; }
+  var res = await fetch('/api/diamonds/convert', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({claim_code:currentClaimCode,stars_amount:stars}) });
+  var data = await res.json();
+  if (data.success) { showToast('Convertido! +$' + data.usdc_gained + ' Spoils','success'); loadSpoilsDashboard(); }
+  else showToast(data.message||t('error_server'),'error');
+}
+
+async function linkWallet() {
+  var wallet = document.getElementById('sp-wallet-input').value.trim();
+  if (!/^0x[0-9a-fA-F]{40}$/.test(wallet)) { showToast('Endere\u00e7o inv\u00e1lido','error'); return; }
+  var res = await fetch('/api/diamonds/link-wallet', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({claim_code:currentClaimCode,wallet_address:wallet}) });
+  var data = await res.json();
+  if (data.success) { showToast('Wallet vinculada!','success'); loadSpoilsDashboard(); }
+  else showToast(data.message||t('error_server'),'error');
+}
+
+async function claimSpoils() {
+  var btn = document.getElementById('sp-claim-btn');
+  var status = document.getElementById('sp-claim-status');
+  btn.disabled = true; btn.textContent = 'Processando...';
+  try {
+    var sigRes = await fetch('/api/diamonds/claim-spoils', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({claim_code:currentClaimCode}) });
+    var sigData = await sigRes.json();
+    if (!sigData.wallet || !sigData.signature) throw new Error(sigData.message||'Failed');
+    if (!window.ethereum) { showToast(t('error_no_wallet'),'error'); btn.disabled=false; return; }
+    var chainId = await window.ethereum.request({method:'eth_chainId'});
+    if (parseInt(chainId,16) !== 8453) {
+      try { await window.ethereum.request({method:'wallet_switchEthereumChain',params:[{chainId:'0x2105'}]}); } catch(e) {}
+    }
+    var iface = new ethers.Interface([{inputs:[{name:'wallet',type:'address'},{name:'usdcAmount',type:'uint256'},{name:'nonce',type:'uint256'},{name:'signature',type:'bytes'}],name:'claim',outputs:[],stateMutability:'nonpayable',type:'function'}]);
+    var calldata = iface.encodeFunctionData('claim',[sigData.wallet,sigData.amount,sigData.nonce,sigData.signature]);
+    var txHash = await window.ethereum.request({method:'eth_sendTransaction',params:[{from:sigData.wallet,to:sigData.contract_address,data:calldata,gas:'0x30D40'}]});
+    status.className='claim-status success';
+    status.innerHTML = '\u2705 Resgatado! <a href="https://basescan.org/tx/'+txHash+'" target="_blank" style="color:var(--green)">Ver TX</a>';
+    showToast('\ud83c\udf89 Spoils resgatados!','success');
+    setTimeout(loadSpoilsDashboard,3000);
+  } catch(e) {
+    status.className='claim-status error';
+    status.textContent = '\u274c ' + (e.message||'Erro ao resgatar');
+  }
+  btn.disabled=false;
+}
+
 
 </script>
 </body>
