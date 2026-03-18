@@ -12,7 +12,10 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23080810'/%3E%3Crect x='1' y='1' width='30' height='30' rx='7' fill='none' stroke='%23D4A843' stroke-width='.5' opacity='.3'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='system-ui,-apple-system,sans-serif' font-size='16' font-weight='800' fill='%23D4A843'%3EK%CE%9E%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;700&family=JetBrains+Mono:wght@400;600&family=Google+Sans+Flex&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="/assets/ships/eclipse/eclipse_hd.jpg">
+<link rel="preload" as="image" href="/assets/ships/aurora/aurora_hd.jpg">
+<link rel="preload" as="image" href="/assets/ships/kraken/kraken_hd.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@4/dist/fp.min.js" integrity="sha384-krE1YAVuJx0qn+hR6KwuVnQtbZIATYwWHVaIy7nXFZRyOrBxBfg81m+cqtbljaYo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.5/ethers.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
@@ -149,9 +152,13 @@ img{max-width:100%;display:block}
 
 .ship-card{position:relative;background:rgba(14,14,20,.85);border:1px solid rgba(255,255,255,.06);border-radius:20px;overflow:hidden;transition:all .4s cubic-bezier(.25,.46,.45,.94);cursor:pointer;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
 .ship-card:hover{transform:translateY(-4px) scale(1.01);border-color:rgba(212,168,67,.3);box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 40px rgba(212,168,67,.08)}
-.ship-card:hover.eclipse-card{border-color:rgba(103,232,249,.3);box-shadow:0 8px 40px rgba(103,232,249,.12)}
-.ship-card:hover.aurora-card{border-color:rgba(245,158,11,.3);box-shadow:0 8px 40px rgba(245,158,11,.12)}
-.ship-card:hover.kraken-card{border-color:rgba(167,139,250,.3);box-shadow:0 8px 40px rgba(167,139,250,.12)}
+.ship-card:hover.eclipse-card{border-color:rgba(103,232,249,.3);box-shadow:0 8px 60px rgba(103,232,249,.25),0 0 0 1px rgba(103,232,249,.3)}
+.ship-card:hover.aurora-card{border-color:rgba(245,158,11,.3);box-shadow:0 8px 60px rgba(245,158,11,.25),0 0 0 1px rgba(245,158,11,.3)}
+.ship-card:hover.kraken-card{border-color:rgba(167,139,250,.3);box-shadow:0 8px 60px rgba(167,139,250,.25),0 0 0 1px rgba(167,139,250,.3)}
+@keyframes cardEntrance{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+.ships-grid .ship-card:nth-child(1){animation:cardEntrance .5s ease forwards;animation-delay:.1s;opacity:0}
+.ships-grid .ship-card:nth-child(2){animation:cardEntrance .5s ease forwards;animation-delay:.22s;opacity:0}
+.ships-grid .ship-card:nth-child(3){animation:cardEntrance .5s ease forwards;animation-delay:.34s;opacity:0}
 .ship-card.voted{border-color:var(--gold)!important;box-shadow:0 0 40px var(--gold-glow)!important;cursor:default}
 .ship-card.voted .vote-btn{width:100%;padding:14px 24px;background:transparent;border:1.5px solid rgba(212,168,67,.45);color:var(--gold);font-family:var(--font-body);font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:12px;cursor:pointer;transition:all .3s ease;margin-top:16px}
 
@@ -1494,6 +1501,23 @@ img{max-width:100%;display:block}
   .confirm-btn{padding:14px 24px!important;font-size:14px!important}
 }
 
+/* ═══ ACTIVITY TICKER ═══ */
+.ticker-wrap{height:32px;overflow:hidden;position:relative;margin-bottom:16px}
+.ticker-item{font-family:var(--font-mono);font-size:12px;color:var(--gold);text-align:center;height:32px;line-height:32px;animation:tickerSlide .5s ease forwards}
+@keyframes tickerSlide{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+
+/* ═══ DEADLINE BAR ═══ */
+#deadline-bar{width:100%;padding:8px 16px;text-align:center;font-family:var(--font-mono);font-size:13px;color:var(--text-dim);background:rgba(103,0,211,.12);border-bottom:1px solid rgba(103,0,211,.2);z-index:101;position:relative}
+#deadline-bar.urgency{background:rgba(212,168,67,.10);border-bottom-color:var(--gold-border)}
+#deadline-bar.critical{animation:deadlinePulse 1.5s ease-in-out infinite}
+@keyframes deadlinePulse{0%,100%{opacity:1}50%{opacity:.7}}
+
+/* ═══ CONFETTI ═══ */
+@keyframes confettiFall{0%{opacity:1;transform:translateY(0) translateX(0) rotate(0deg)}100%{opacity:0;transform:translateY(var(--cy)) translateX(var(--cx)) rotate(var(--cr))}}
+
+/* ═══ STICKY RANK BAR ═══ */
+#sticky-rank-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(10,10,10,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--gold-border);padding:10px 24px;display:none;text-align:center;font-family:var(--font-mono);font-size:13px;color:var(--text-dim);animation:fadeIn .5s ease}
+
 .field-hint{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;border:1px solid var(--gold-border);color:var(--gold);font-size:11px;font-weight:700;cursor:pointer;position:relative;flex-shrink:0;font-family:var(--font-mono);transition:all .2s;user-select:none}
 .field-hint:hover{background:rgba(212,168,67,.12);border-color:var(--gold)}
 .field-hint .tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1A1A2E;border:1px solid var(--gold-border);border-radius:10px;padding:10px 14px;font-size:12px;color:var(--text);white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .2s;z-index:100;font-family:var(--font-body);line-height:1.5;min-width:200px;text-align:left}
@@ -1503,6 +1527,9 @@ img{max-width:100%;display:block}
 </style>
 </head>
 <body>
+
+<!-- VOTING DEADLINE BAR -->
+<div id="deadline-bar"></div>
 
 <div class="star-bg"></div>
 <canvas id="galaxy-stars-canvas" style="position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.7"></canvas>
@@ -1731,6 +1758,9 @@ img{max-width:100%;display:block}
         <p style="font-size:14px;color:var(--text-dim);max-width:520px;margin:0 auto" data-i18n="vote_sub">Three names. One will rule them all. You decide.</p>
       </div>
 
+      <!-- ACTIVITY TICKER -->
+      <div id="activity-ticker" class="ticker-wrap" style="display:none"></div>
+
       <div class="ships-grid" id="ships-grid">
         <!-- ECLIPSE -->
         <div class="ship-card eclipse-card" data-ship="eclipse" onclick="selectShip('eclipse')">
@@ -1804,6 +1834,9 @@ img{max-width:100%;display:block}
           </div>
         </div>
       </div>
+
+      <!-- LIVE LEADER BAR -->
+      <div id="live-leader-bar" style="text-align:center;font-family:var(--font-mono);font-size:13px;color:var(--text-dim);margin-top:16px;animation:fadeIn .5s ease"></div>
 
       <div class="total-votes" id="total-votes"></div>
     </div>
@@ -2869,14 +2902,21 @@ function setConfShipVisual(shipName) {
   if (!img || !container) return;
   var s = (shipName || '').toLowerCase();
   var shipAssets = {
-    eclipse: '/assets/ships/eclipse/eclipse_hero.png',
-    aurora: '/assets/ships/aurora/aurora_hero.png',
-    kraken: '/assets/ships/kraken/kraken_hero.png'
+    eclipse: '/assets/ships/eclipse/eclipse_hd.jpg',
+    aurora: '/assets/ships/aurora/aurora_hd.jpg',
+    kraken: '/assets/ships/kraken/kraken_hd.jpg'
+  };
+  var shipGlowColors = {
+    eclipse: '103,232,249',
+    aurora: '245,158,11',
+    kraken: '167,139,250'
   };
   if (shipAssets[s]) {
     img.src = shipAssets[s];
     img.alt = shipName.toUpperCase();
     container.style.display = '';
+    var rgb = shipGlowColors[s] || '212,168,67';
+    img.style.boxShadow = '0 0 60px rgba(' + rgb + ',.35), 0 0 120px rgba(' + rgb + ',.15)';
   } else {
     container.style.display = 'none';
   }
@@ -3158,6 +3198,11 @@ function checkAlreadyVoted() {
         showDrRefgen(data.nickname);
         fetchStarStats(data.nickname);
         fetchStarLeaderboard(data.nickname);
+        // Sticky rank bar for returning voters
+        fetch('/api/diamonds/' + encodeURIComponent(data.nickname))
+          .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
+          .then(function(d) { showStickyRankBar(data.nickname, d); initStickyRankPolling(data.nickname); })
+          .catch(function() {});
       }
     })
     .catch(function() { /* silent — user sees gateway state */ });
@@ -3410,12 +3455,23 @@ function showConfirmation(data) {
   setState('confirm');
   showDrRefgen(nick);
 
+  // Confetti celebration
+  launchConfetti();
+
   fetchStarStats(nick);
   fetchStarLeaderboard(nick);
   if (!lbInterval) lbInterval = setInterval(function() {
     fetchStarStats(nick);
     fetchStarLeaderboard(nick);
   }, 30000);
+
+  // Sticky rank bar
+  if (nick) {
+    fetch('/api/diamonds/' + encodeURIComponent(nick))
+      .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
+      .then(function(d) { showStickyRankBar(nick, d); initStickyRankPolling(nick); })
+      .catch(function() {});
+  }
 }
 
 function showAlreadyVoted(data) {
@@ -3492,6 +3548,17 @@ function updateBars() {
     if (gwBar) gwBar.style.width = pct + '%';
     if (gwPct) gwPct.textContent = pct + '%';
   });
+
+  // Live leader bar
+  var leaderBar = document.getElementById('live-leader-bar');
+  if (leaderBar && stats.total > 0) {
+    var shipColors = { eclipse: '#67E8F9', aurora: '#F59E0B', kraken: '#A78BFA' };
+    var leader = 'eclipse';
+    if ((stats.aurora || 0) > (stats[leader] || 0)) leader = 'aurora';
+    if ((stats.kraken || 0) > (stats[leader] || 0)) leader = 'kraken';
+    var leaderPct = ((stats[leader] || 0) / (stats.total || 1) * 100).toFixed(1);
+    leaderBar.innerHTML = '<span style="color:' + shipColors[leader] + '">\u26A1 ' + leader.toUpperCase() + ' leading with ' + leaderPct + '%</span> \u2014 vote counts NOW';
+  }
 }
 
 function updateTotalVotes() {
@@ -3528,6 +3595,7 @@ setInterval(checkReveal, 30000);
 var lbInterval = null;
 
 async function fetchStarStats(nick) {
+  if (!nick || nick.trim() === "") return;
   try {
     var res = await fetch('/api/diamonds/' + encodeURIComponent(nick));
     if (!res.ok) return;
@@ -4088,6 +4156,112 @@ function showToast(message, type) {
 }
 
 // ═══════════════════════════════════════════════════
+//  ACTIVITY TICKER (F2)
+// ═══════════════════════════════════════════════════
+var tickerItems = [];
+var tickerIdx = 0;
+var tickerInterval = null;
+
+function fetchRecentVotes() {
+  fetch('/api/vote/recent')
+    .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
+    .then(function(data) {
+      if (!data || !data.length) { document.getElementById('activity-ticker') && (document.getElementById('activity-ticker').style.display = 'none'); return; }
+      tickerItems = data.slice(0, 5);
+      var el = document.getElementById('activity-ticker');
+      if (el && tickerItems.length > 0) {
+        el.style.display = '';
+        showTickerItem();
+        if (!tickerInterval) tickerInterval = setInterval(showTickerItem, 4000);
+      }
+    })
+    .catch(function() {
+      var el = document.getElementById('activity-ticker');
+      if (el) el.style.display = 'none';
+    });
+}
+
+function showTickerItem() {
+  var el = document.getElementById('activity-ticker');
+  if (!el || tickerItems.length === 0) return;
+  var item = tickerItems[tickerIdx % tickerItems.length];
+  var ago = item.ago || '';
+  var nick = item.nickname || 'someone';
+  var ship = (item.ship || '').toUpperCase();
+  el.innerHTML = '<div class="ticker-item">\uD83D\uDE80 ' + nick + ' voted for ' + ship + ' \u00B7 ' + ago + '</div>';
+  tickerIdx++;
+}
+
+// ═══════════════════════════════════════════════════
+//  VOTING DEADLINE BAR (F3)
+// ═══════════════════════════════════════════════════
+function initDeadlineBar() {
+  var DEADLINE = new Date('2026-03-21T08:10:00Z').getTime();
+  var bar = document.getElementById('deadline-bar');
+  if (!bar) return;
+
+  function tickDeadline() {
+    var diff = DEADLINE - Date.now();
+    if (diff <= 0) { bar.textContent = '\u23F3 VOTING HAS CLOSED'; return; }
+    var dd = Math.floor(diff / 86400000);
+    var hh = Math.floor((diff % 86400000) / 3600000);
+    var mm = Math.floor((diff % 3600000) / 60000);
+    var totalVotes = (stats && stats.total) ? stats.total.toLocaleString() : '0';
+    bar.innerHTML = '\u23F3 VOTING CLOSES IN: <strong>' + dd + '</strong>d <strong>' + String(hh).padStart(2,'0') + '</strong>h <strong>' + String(mm).padStart(2,'0') + '</strong>m \u2014 <strong>' + totalVotes + '</strong> votes cast so far';
+
+    bar.classList.remove('urgency', 'critical');
+    if (diff < 3600000) {
+      bar.classList.add('urgency', 'critical');
+    } else if (diff < 86400000) {
+      bar.classList.add('urgency');
+    }
+  }
+  tickDeadline();
+  setInterval(tickDeadline, 1000);
+}
+
+// ═══════════════════════════════════════════════════
+//  CONFETTI CELEBRATION (F4)
+// ═══════════════════════════════════════════════════
+function launchConfetti() {
+  var colors = ['#D4A843', '#6700D3', '#67E8F9', '#F59E0B', '#A78BFA'];
+  for (var i = 0; i < 30; i++) {
+    var p = document.createElement('div');
+    var cx = (Math.random() - 0.5) * 300;
+    var cy = -(200 + Math.random() * 200);
+    var cr = Math.random() * 720 - 360;
+    p.style.cssText = 'position:fixed;width:8px;height:8px;border-radius:50%;z-index:9999;pointer-events:none;top:50%;left:50%;background:' + colors[Math.floor(Math.random() * colors.length)] + ';--cx:' + cx + 'px;--cy:' + cy + 'px;--cr:' + cr + 'deg;animation:confettiFall 1.5s ease-out forwards';
+    document.body.appendChild(p);
+    (function(el) { setTimeout(function() { el.remove(); }, 1600); })(p);
+  }
+}
+
+// ═══════════════════════════════════════════════════
+//  STICKY RANK BAR (F5)
+// ═══════════════════════════════════════════════════
+var stickyRankInterval = null;
+
+function showStickyRankBar(nick, data) {
+  var bar = document.getElementById('sticky-rank-bar');
+  if (!bar) return;
+  var rank = data.rank ? '#' + data.rank : '--';
+  var starsVal = (data.total || 0).toLocaleString();
+  var recruited = data.referral_count || 0;
+  bar.innerHTML = '\uD83D\uDCCD ' + nick + ' \u00B7 ' + rank + ' \u00B7 ' + starsVal + '\u2B50 \u00B7 ' + recruited + ' recruited';
+  bar.style.display = '';
+}
+
+function initStickyRankPolling(nick) {
+  if (stickyRankInterval) clearInterval(stickyRankInterval);
+  stickyRankInterval = setInterval(function() {
+    fetch('/api/diamonds/' + encodeURIComponent(nick))
+      .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
+      .then(function(data) { showStickyRankBar(nick, data); })
+      .catch(function() {});
+  }, 30000);
+}
+
+// ═══════════════════════════════════════════════════
 //  INIT
 // ═══════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', function() {
@@ -4108,6 +4282,9 @@ document.addEventListener('DOMContentLoaded', function() {
   fetchStats();
   checkReveal();
   initStarDashboard();
+  initDeadlineBar();
+  fetchRecentVotes();
+  setInterval(fetchRecentVotes, 30000);
 
   // Note: voted state check moved to initFingerprint() → checkAlreadyVoted()
   // Runs after fingerprint is ready, queries PostgreSQL via /api/vote/email/check
@@ -4471,5 +4648,8 @@ async function claimSpoils() {
   }
   if(window.matchMedia('(prefers-reduced-motion: no-preference)').matches) initGalaxyStarfield();
 </script>
+
+<!-- STICKY RANK BAR -->
+<div id="sticky-rank-bar"></div>
 </body>
 </html>
