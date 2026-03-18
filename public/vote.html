@@ -400,6 +400,12 @@ img{max-width:100%;display:block}
 .sr-balance-btn{padding:14px 24px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--void);font-family:var(--font-display);font-size:13px;font-weight:700;border:none;border-radius:12px;cursor:pointer;transition:all .3s;text-transform:uppercase;letter-spacing:1px;white-space:nowrap}
 .sr-balance-btn:hover{box-shadow:0 4px 20px var(--gold-glow);transform:translateY(-2px)}
 .sr-balance-btn:disabled{opacity:.5;cursor:wait}
+.sr-resend-wrap{text-align:center;margin-top:8px}
+.sr-resend-btn{background:none;border:none;color:var(--text-muted);font-size:13px;cursor:pointer;padding:6px 12px;transition:.2s;font-family:var(--font-body);text-decoration:underline;text-underline-offset:3px}
+.sr-resend-btn:hover{color:var(--gold)}
+.sr-resend-btn:disabled{opacity:.4;pointer-events:none}
+.sr-resend-msg{font-size:12px;margin-top:6px;color:var(--gold);opacity:0;transition:opacity .3s}
+.sr-resend-msg.show{opacity:1}
 .sr-balance-result{display:none}
 .sr-balance-result.show{display:block;animation:fadeIn .5s ease}
 /* CLAIM USDC Button */
@@ -1891,6 +1897,10 @@ img{max-width:100%;display:block}
             <input type="text" class="sr-balance-input" id="sr-balance-code" autocomplete="off" spellcheck="false" data-i18n-placeholder="dr.balPlaceholder" placeholder="Your referral code / nickname...">
             <button class="sr-balance-btn" id="sr-balance-btn" onclick="checkDrBalance()" data-i18n="dr.balBtn">CHECK ⭐</button>
           </div>
+          <div class="sr-resend-wrap">
+            <button class="sr-resend-btn" id="sr-resend-btn" onclick="resendVoterId()" data-i18n="resend.btn">¿No recibiste tu código secreto? Reenviar →</button>
+            <div class="sr-resend-msg" id="sr-resend-msg"></div>
+          </div>
           <div class="sr-balance-result" id="sr-balance-result">
             <div class="sr-balance-stats">
               <div class="sr-bal-stat">
@@ -2239,6 +2249,11 @@ const T = {
     'net.title': 'MY CREW',
     'net.placeholder': 'Your code / nickname...',
     'net.btn': 'VIEW NETWORK \uD83C\uDF10',
+    'resend.btn': "Didn't receive your secret code? Resend \u2192",
+    'resend.success': '\u2714 Code sent to your email',
+    'resend.noEmail': 'Enter your email or nickname first',
+    'resend.notFound': 'No record found. Did you vote?',
+    'resend.error': 'Error sending. Try again',
     'net.directs': 'directs',
     'net.subsIn': 'in G2',
     'net.expand': 'sub-referrals',
@@ -2414,6 +2429,11 @@ const T = {
     'net.title': 'MEUS TRIPULANTES',
     'net.placeholder': 'Seu c\u00F3digo / apelido...',
     'net.btn': 'VER REDE \uD83C\uDF10',
+    'resend.btn': 'N\u00E3o recebeu seu c\u00F3digo secreto? Reenviar \u2192',
+    'resend.success': '\u2714 C\u00F3digo enviado ao seu email',
+    'resend.noEmail': 'Digite seu email ou apelido primeiro',
+    'resend.notFound': 'Registro n\u00E3o encontrado. J\u00E1 votou?',
+    'resend.error': 'Erro ao enviar. Tente novamente',
     'net.directs': 'diretos',
     'net.subsIn': 'em G2',
     'net.expand': 'sub-referidos',
@@ -3489,6 +3509,51 @@ function animateNumber(el, target) {
       clearInterval(timer);
     }
   }, 30);
+}
+
+
+async function resendVoterId() {
+  var btn = document.getElementById('sr-resend-btn');
+  var msg = document.getElementById('sr-resend-msg');
+  var codeInput = document.getElementById('sr-balance-code');
+  var identifier = (codeInput ? codeInput.value : '').trim();
+
+  if (!identifier) {
+    msg.textContent = t('resend.noEmail');
+    msg.classList.add('show');
+    setTimeout(function() { msg.classList.remove('show'); }, 3000);
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '...';
+  msg.classList.remove('show');
+
+  try {
+    var res = await fetch('/api/vote/email/resend-voter-id', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ identifier: identifier })
+    });
+    var data = await res.json();
+
+    if (data.success) {
+      msg.textContent = t('resend.success');
+    } else if (data.error === 'not_found') {
+      msg.textContent = t('resend.notFound');
+    } else {
+      msg.textContent = t('resend.error');
+    }
+    msg.classList.add('show');
+    setTimeout(function() { msg.classList.remove('show'); }, 5000);
+  } catch (e) {
+    msg.textContent = t('resend.error');
+    msg.classList.add('show');
+    setTimeout(function() { msg.classList.remove('show'); }, 3000);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = t('resend.btn');
+  }
 }
 
 async function checkDrBalance() {
