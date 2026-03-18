@@ -3581,7 +3581,7 @@ function renderStarLeaderboard(entries, nick) {
       '<span class="lb-rank ' + (rankColors[rank] || '') + '">' + (rankIcons[rank] || rank + '.') + '</span>' +
       '<span class="lb-name">' + escapeHtml(entry.referrer_code || '') + (isYou ? '<span class="lb-you-tag"> ' + t('sr.you') + '</span>' : '') + '</span>' +
       badgeHtml +
-      '<span class="star-count">⭐ ' + (entry.total_stars || 0).toLocaleString() + '</span>';
+      '<span class="star-count">⭐ ' + (entry.total_diamonds || entry.total_stars || 0).toLocaleString() + '</span>';
     container.appendChild(row);
   });
 }
@@ -3675,7 +3675,7 @@ function renderDrLeaderboard(entries) {
       '<span class="sr-lb-rank r' + Math.min(rank, 4) + '">' + (rankIcons[rank] || rank + '.') + '</span>' +
       '<span class="sr-lb-name">' + escapeHtml(entry.referrer_code || '') + (isYou ? '<span class="lb-you-tag"> ' + t('sr.you') + '</span>' : '') + '</span>' +
       badgeHtml +
-      '<span class="sr-lb-stars">⭐ ' + (entry.total_stars || 0).toLocaleString() + '</span>';
+      '<span class="sr-lb-stars">⭐ ' + (entry.total_diamonds || entry.total_stars || 0).toLocaleString() + '</span>';
     container.appendChild(row);
   });
 }
