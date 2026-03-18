@@ -1718,6 +1718,11 @@ img{max-width:100%;display:block}
         <div class="confirm-check">&#10003;</div>
         <h2 class="confirm-title grad-text" data-i18n="confirm.title">YOUR VOTE HAS BEEN RECORDED</h2>
 
+        <!-- Ship visual -->
+        <div id="conf-ship-visual" style="text-align:center;margin:16px 0 8px;">
+          <img id="conf-ship-img" src="" alt="" style="max-width:220px;width:100%;border-radius:12px;box-shadow:0 4px 24px rgba(212,168,67,0.15);">
+        </div>
+
         <div class="confirm-detail">
           <div class="confirm-item">
             <div class="confirm-item-label" data-i18n="confirm.ship">Ship</div>
@@ -2741,6 +2746,25 @@ var lastBalanceData = null; // Stores last star balance check result
 var lastBalanceCode = null; // Stores the referrer code used
 var referredBy = null;
 
+function setConfShipVisual(shipName) {
+  var img = document.getElementById('conf-ship-img');
+  var container = document.getElementById('conf-ship-visual');
+  if (!img || !container) return;
+  var s = (shipName || '').toLowerCase();
+  var shipAssets = {
+    eclipse: '/assets/ships/eclipse/eclipse_hero.png',
+    aurora: '/assets/ships/aurora/aurora_hero.png',
+    kraken: '/assets/ships/kraken/kraken_hero.png'
+  };
+  if (shipAssets[s]) {
+    img.src = shipAssets[s];
+    img.alt = shipName.toUpperCase();
+    container.style.display = '';
+  } else {
+    container.style.display = 'none';
+  }
+}
+
 function setState(name) {
   currentState = name;
   document.querySelectorAll('.state').forEach(function(s) { s.classList.remove('active'); });
@@ -3003,6 +3027,7 @@ function checkAlreadyVoted() {
       if (data.voted && data.nickname) {
         selectedNickname = data.nickname;
         document.getElementById('conf-ship').textContent = (data.ship || '').toUpperCase();
+        setConfShipVisual(data.ship);
         document.getElementById('conf-nickname').textContent = data.nickname;
         if (data.voter_id) {
           document.getElementById('conf-voter-id').textContent = data.voter_id;
@@ -3237,6 +3262,7 @@ async function submitVote(ship) {
 
 function showConfirmation(data) {
   document.getElementById('conf-ship').textContent = (data.ship || '').toUpperCase();
+  setConfShipVisual(data.ship);
   document.getElementById('conf-nickname').textContent = data.nickname || selectedNickname || '';
 
   if (data.wallet_address || walletAddress) {
@@ -3276,6 +3302,7 @@ function showConfirmation(data) {
 
 function showAlreadyVoted(data) {
   document.getElementById('conf-ship').textContent = (data.ship || '\u2014').toUpperCase();
+  setConfShipVisual(data.ship);
   document.getElementById('conf-nickname').textContent = data.nickname || '\u2014';
 
   if (data.wallet_address) {
