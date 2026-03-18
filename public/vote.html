@@ -1492,6 +1492,13 @@ img{max-width:100%;display:block}
   .ship-grid,.ships-grid{grid-template-columns:1fr!important;max-width:340px;margin:0 auto}
   .confirm-btn{padding:14px 24px!important;font-size:14px!important}
 }
+
+.field-hint{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;border:1px solid var(--gold-border);color:var(--gold);font-size:11px;font-weight:700;cursor:pointer;position:relative;flex-shrink:0;font-family:var(--font-mono);transition:all .2s;user-select:none}
+.field-hint:hover{background:rgba(212,168,67,.12);border-color:var(--gold)}
+.field-hint .tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1A1A2E;border:1px solid var(--gold-border);border-radius:10px;padding:10px 14px;font-size:12px;color:var(--text);white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .2s;z-index:100;font-family:var(--font-body);line-height:1.5;min-width:200px;text-align:left}
+.field-hint:hover .tooltip,.field-hint:focus .tooltip{opacity:1}
+.field-hint .tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1A1A2E}
+
 </style>
 </head>
 <body>
@@ -1893,8 +1900,9 @@ img{max-width:100%;display:block}
       <div class="sr-balance">
         <div class="sr-balance-card">
           <div class="sr-balance-title">⭐ <span data-i18n="dr.balTitle">MY STAR BALANCE</span></div>
-          <div class="sr-balance-input-wrap">
-            <input type="text" class="sr-balance-input" id="sr-balance-code" autocomplete="off" spellcheck="false" data-i18n-placeholder="dr.balPlaceholder" placeholder="Your referral code / nickname...">
+          <div class="sr-balance-input-wrap" style="align-items:center;gap:8px">
+            <span class="field-hint" tabindex="0">?<span class="tooltip" data-i18n="hint.balance">Tu apodo (nickname) elegido al votar. Ej: "Dante123"</span></span>
+            <input type="text" class="sr-balance-input" id="sr-balance-code" autocomplete="off" spellcheck="false" data-i18n-placeholder="dr.balPlaceholder" placeholder="Your referral code / nickname..." style="flex:1">
             <button class="sr-balance-btn" id="sr-balance-btn" onclick="checkDrBalance()" data-i18n="dr.balBtn">CHECK ⭐</button>
           </div>
           <div class="sr-resend-wrap">
@@ -1953,8 +1961,9 @@ img{max-width:100%;display:block}
       <div class="sr-network">
         <div class="sr-network-card">
           <div class="sr-network-title">🌐 <span data-i18n="net.title">MI TRIPULACIÓN</span></div>
-          <div class="sr-network-input-wrap">
-            <input type="text" class="sr-network-input" id="sr-network-code" autocomplete="off" spellcheck="false" data-i18n-placeholder="net.placeholder" placeholder="Tu código / apodo...">
+          <div class="sr-network-input-wrap" style="align-items:center;gap:8px">
+            <span class="field-hint" tabindex="0">?<span class="tooltip" data-i18n="hint.network">Tu apodo (nickname) elegido al votar. La red solo aparece después de que hayas votado.</span></span>
+            <input type="text" class="sr-network-input" id="sr-network-code" autocomplete="off" spellcheck="false" data-i18n-placeholder="net.placeholder" placeholder="Tu código / apodo..." style="flex:1">
             <button class="sr-network-btn" id="sr-network-btn" onclick="checkNetwork()" data-i18n="net.btn">VER TRIPULACIÓN 🌐</button>
           </div>
           <div class="sr-network-result" id="sr-network-result">
@@ -2254,6 +2263,8 @@ const T = {
     'resend.noEmail': 'Enter your email or nickname first',
     'resend.notFound': 'No record found. Did you vote?',
     'resend.error': 'Error sending. Try again',
+    'hint.balance': 'Your nickname chosen when voting. E.g.: "Dante123"',
+    'hint.network': 'Your nickname chosen when voting. Network only appears after you vote.',
     'net.directs': 'directs',
     'net.subsIn': 'in G2',
     'net.expand': 'sub-referrals',
@@ -2434,6 +2445,8 @@ const T = {
     'resend.noEmail': 'Digite seu email ou apelido primeiro',
     'resend.notFound': 'Registro n\u00E3o encontrado. J\u00E1 votou?',
     'resend.error': 'Erro ao enviar. Tente novamente',
+    'hint.balance': 'Seu apelido (nickname) escolhido ao votar. Ex: "Dante123"',
+    'hint.network': 'Seu apelido escolhido ao votar. A rede só aparece após votar.',
     'net.directs': 'diretos',
     'net.subsIn': 'em G2',
     'net.expand': 'sub-referidos',
