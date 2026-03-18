@@ -2991,6 +2991,34 @@ async function initFingerprint() {
     fingerprint = localStorage.getItem('nvk_fp') || ('fb_' + crypto.randomUUID());
     localStorage.setItem('nvk_fp', fingerprint);
   }
+  // After fingerprint is ready, check if already voted (PostgreSQL)
+  checkAlreadyVoted();
+}
+
+function checkAlreadyVoted() {
+  if (!fingerprint) return;
+  fetch('/api/vote/email/check?fingerprint=' + encodeURIComponent(fingerprint))
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.voted && data.nickname) {
+        selectedNickname = data.nickname;
+        document.getElementById('conf-ship').textContent = (data.ship || '').toUpperCase();
+        document.getElementById('conf-nickname').textContent = data.nickname;
+        if (data.voter_id) {
+          document.getElementById('conf-voter-id').textContent = data.voter_id;
+          document.getElementById('voter-id-section').style.display = '';
+          document.getElementById('conf-wallet-item').style.display = 'none';
+        }
+        var refLink = 'galaxy.novake.gg?ref=' + encodeURIComponent(data.nickname);
+        document.getElementById('ref-link-url').textContent = refLink;
+        setupShareLinks(data.nickname, refLink);
+        setState('confirm');
+        showDrRefgen(data.nickname);
+        fetchStarStats(data.nickname);
+        fetchStarLeaderboard(data.nickname);
+      }
+    })
+    .catch(function() { /* silent — user sees gateway state */ });
 }
 
 // ═══════════════════════════════════════════════════
@@ -3231,10 +3259,6 @@ function showConfirmation(data) {
   var nick = data.nickname || selectedNickname;
   if (nick) {
     sessionStorage.setItem('nvk_voted_nick', nick);
-    localStorage.setItem('nvk_voted_nick', nick);
-    localStorage.setItem('nvk_voted', 'true');
-    if (data.voter_id) localStorage.setItem('nvk_voter_id', data.voter_id);
-    if (data.ship) localStorage.setItem('nvk_voted_ship', data.ship);
   }
   var refLink = 'galaxy.novake.gg?ref=' + encodeURIComponent(nick);
   document.getElementById('ref-link-url').textContent = refLink;
@@ -3926,28 +3950,8 @@ document.addEventListener('DOMContentLoaded', function() {
   checkReveal();
   initStarDashboard();
 
-  // Restore voted state from localStorage
-  var savedNick = localStorage.getItem('nvk_voted_nick');
-  var wasVoted = localStorage.getItem('nvk_voted');
-  if (wasVoted === 'true' && savedNick) {
-    selectedNickname = savedNick;
-    var savedShip = localStorage.getItem('nvk_voted_ship') || '';
-    var savedVoterId = localStorage.getItem('nvk_voter_id') || '';
-    document.getElementById('conf-ship').textContent = savedShip.toUpperCase();
-    document.getElementById('conf-nickname').textContent = savedNick;
-    if (savedVoterId) {
-      document.getElementById('conf-voter-id').textContent = savedVoterId;
-      document.getElementById('voter-id-section').style.display = '';
-      document.getElementById('conf-wallet-item').style.display = 'none';
-    }
-    var refLink = 'galaxy.novake.gg?ref=' + encodeURIComponent(savedNick);
-    document.getElementById('ref-link-url').textContent = refLink;
-    setupShareLinks(savedNick, refLink);
-    setState('confirm');
-    showDrRefgen(savedNick);
-    fetchStarStats(savedNick);
-    fetchStarLeaderboard(savedNick);
-  }
+  // Note: voted state check moved to initFingerprint() → checkAlreadyVoted()
+  // Runs after fingerprint is ready, queries PostgreSQL via /api/vote/email/check
 });
 
 
