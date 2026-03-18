@@ -9,6 +9,12 @@
 <meta property="og:description" content="ECLIPSE vs AURORA vs KRAKEN — Vota por la nave más poderosa de la galaxia.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://galaxy.novake.gg">
+<meta property="og:image" content="https://galaxy.novake.gg/assets/og/og-novake.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="NOVA GALAXY — Vote for your ship">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://galaxy.novake.gg/assets/og/og-novake.png">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23080810'/%3E%3Crect x='1' y='1' width='30' height='30' rx='7' fill='none' stroke='%23D4A843' stroke-width='.5' opacity='.3'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='system-ui,-apple-system,sans-serif' font-size='16' font-weight='800' fill='%23D4A843'%3EK%CE%9E%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -150,7 +156,7 @@ img{max-width:100%;display:block}
 .ships-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1000px;margin:36px auto 0}
 @media(max-width:768px){.ships-grid{grid-template-columns:1fr;max-width:400px}}
 
-.ship-card{position:relative;background:rgba(14,14,20,.85);border:1px solid rgba(255,255,255,.06);border-radius:20px;overflow:hidden;transition:all .4s cubic-bezier(.25,.46,.45,.94);cursor:pointer;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.ship-card{position:relative;background:rgba(14,14,20,.85);border:1px solid rgba(255,255,255,.06);border-radius:20px;overflow:hidden;transition:all .4s cubic-bezier(.25,.46,.45,.94);cursor:default;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
 .ship-card:hover{transform:translateY(-4px) scale(1.01);border-color:rgba(212,168,67,.3);box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 40px rgba(212,168,67,.08)}
 .ship-card:hover.eclipse-card{border-color:rgba(103,232,249,.3);box-shadow:0 8px 60px rgba(103,232,249,.25),0 0 0 1px rgba(103,232,249,.3)}
 .ship-card:hover.aurora-card{border-color:rgba(245,158,11,.3);box-shadow:0 8px 60px rgba(245,158,11,.25),0 0 0 1px rgba(245,158,11,.3)}
@@ -1763,7 +1769,7 @@ img{max-width:100%;display:block}
 
       <div class="ships-grid" id="ships-grid">
         <!-- ECLIPSE -->
-        <div class="ship-card eclipse-card" data-ship="eclipse" onclick="selectShip('eclipse')">
+        <div class="ship-card eclipse-card" data-ship="eclipse">
           <div class="ship-img-wrap">
             <img src="/assets/ships/eclipse/eclipse_hd.jpg" alt="Eclipse" loading="lazy">
             <div class="ship-img-overlay"></div>
@@ -1782,12 +1788,12 @@ img{max-width:100%;display:block}
               <div class="vote-bar-pct" id="pct-eclipse">0%</div>
             </div>
             <div class="secret-msg" id="secret-eclipse" data-i18n="vote.secretMsg">— results hidden until final hour —</div>
-            <button class="vote-btn" id="btn-eclipse" data-i18n="vote_eclipse">&#x2B21; Vote for ECLIPSE</button>
+            <button class="vote-btn" id="btn-eclipse" onclick="event.stopPropagation();selectShip('eclipse')" data-i18n="vote_eclipse">&#x2B21; Vote for ECLIPSE</button>
           </div>
         </div>
 
         <!-- AURORA -->
-        <div class="ship-card aurora-card" data-ship="aurora" onclick="selectShip('aurora')">
+        <div class="ship-card aurora-card" data-ship="aurora">
           <div class="ship-img-wrap">
             <img src="/assets/ships/aurora/aurora_hd.jpg" alt="Aurora" loading="lazy">
             <div class="ship-img-overlay"></div>
@@ -1806,12 +1812,12 @@ img{max-width:100%;display:block}
               <div class="vote-bar-pct" id="pct-aurora">0%</div>
             </div>
             <div class="secret-msg" id="secret-aurora" data-i18n="vote.secretMsg">— results hidden until final hour —</div>
-            <button class="vote-btn" id="btn-aurora" data-i18n="vote_aurora">&#x2B21; Vote for AURORA</button>
+            <button class="vote-btn" id="btn-aurora" onclick="event.stopPropagation();selectShip('aurora')" data-i18n="vote_aurora">&#x2B21; Vote for AURORA</button>
           </div>
         </div>
 
         <!-- KRAKEN -->
-        <div class="ship-card kraken-card" data-ship="kraken" onclick="selectShip('kraken')">
+        <div class="ship-card kraken-card" data-ship="kraken">
           <div class="ship-img-wrap">
             <img src="/assets/ships/kraken/kraken_hd.jpg" alt="Kraken" loading="lazy">
             <div class="ship-img-overlay"></div>
@@ -1830,7 +1836,7 @@ img{max-width:100%;display:block}
               <div class="vote-bar-pct" id="pct-kraken">0%</div>
             </div>
             <div class="secret-msg" id="secret-kraken" data-i18n="vote.secretMsg">— results hidden until final hour —</div>
-            <button class="vote-btn" id="btn-kraken" data-i18n="vote_kraken">&#x2B21; Vote for KRAKEN</button>
+            <button class="vote-btn" id="btn-kraken" onclick="event.stopPropagation();selectShip('kraken')" data-i18n="vote_kraken">&#x2B21; Vote for KRAKEN</button>
           </div>
         </div>
       </div>
