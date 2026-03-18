@@ -3465,6 +3465,13 @@ function showConfirmation(data) {
     fetchStarLeaderboard(nick);
   }, 30000);
 
+  // Auto-fill balance check so claim button appears without manual input
+  var balInput = document.getElementById('sr-balance-code');
+  if (balInput && nick) {
+    balInput.value = nick;
+    setTimeout(checkDrBalance, 1000);
+  }
+
   // Sticky rank bar
   if (nick) {
     fetch('/api/diamonds/' + encodeURIComponent(nick))
