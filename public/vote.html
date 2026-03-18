@@ -1621,6 +1621,7 @@ img{max-width:100%;display:block}
           <span class="otp-resend disabled" id="otp-resend" onclick="resendCode()">
             <span data-i18n="otp.resend">Resend code</span> (<span class="otp-timer" id="otp-timer">60</span>s)
           </span>
+          <p style="margin:8px 0 0;font-size:12px;color:var(--text-muted);opacity:.8" data-i18n="otp.spamNote">📬 ¿No ves el email? Revisa tu carpeta de spam.</p>
         </div>
       </div>
     </div>
@@ -1908,6 +1909,7 @@ img{max-width:100%;display:block}
           <div class="sr-resend-wrap">
             <button class="sr-resend-btn" id="sr-resend-btn" onclick="resendVoterId()" data-i18n="resend.btn">¿No recibiste tu código secreto? Reenviar →</button>
             <div class="sr-resend-msg" id="sr-resend-msg"></div>
+            <p style="margin:6px 0 0;font-size:11px;color:var(--text-muted);opacity:.75" data-i18n="resend.spamNote">📬 Revisa también tu carpeta de spam.</p>
           </div>
           <div class="sr-balance-result" id="sr-balance-result">
             <div class="sr-balance-stats">
@@ -2263,6 +2265,8 @@ const T = {
     'resend.noEmail': 'Enter your email or nickname first',
     'resend.notFound': 'No record found. Did you vote?',
     'resend.error': 'Error sending. Try again',
+    'otp.spamNote': '\uD83D\uDCEC Can\'t find the email? Check your spam folder.',
+    'resend.spamNote': '\uD83D\uDCEC Also check your spam folder.',
     'hint.balance': 'Your nickname chosen when voting. E.g.: "Dante123"',
     'hint.network': 'Your nickname chosen when voting. Network only appears after you vote.',
     'net.directs': 'directs',
@@ -2445,6 +2449,8 @@ const T = {
     'resend.noEmail': 'Digite seu email ou apelido primeiro',
     'resend.notFound': 'Registro n\u00E3o encontrado. J\u00E1 votou?',
     'resend.error': 'Erro ao enviar. Tente novamente',
+    'otp.spamNote': '\uD83D\uDCEC N\u00E3o achou o email? Verifique sua pasta de spam.',
+    'resend.spamNote': '\uD83D\uDCEC Verifique tamb\u00E9m sua pasta de spam.',
     'hint.balance': 'Seu apelido (nickname) escolhido ao votar. Ex: "Dante123"',
     'hint.network': 'Seu apelido escolhido ao votar. A rede só aparece após votar.',
     'net.directs': 'diretos',
