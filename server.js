@@ -99,6 +99,28 @@ app.use('/api/stars', createProxyMiddleware({
   }
 }));
 
+
+app.use('/api/vote/submit', createProxyMiddleware({
+  target: API_URL,
+  changeOrigin: true,
+  pathRewrite: () => '/vote/email/submit',
+  timeout: 15000,
+  onError: (err, req, res) => {
+    console.error('[proxy] vote/submit error:', err.message);
+    res.status(502).json({ error: 'proxy_error', message: 'API temporarily unavailable' });
+  }
+}));
+
+app.use('/api/vote', createProxyMiddleware({
+  target: API_URL,
+  changeOrigin: true,
+  pathRewrite: (path) => '/vote' + path,
+  timeout: 15000,
+  onError: (err, req, res) => {
+    console.error('[proxy] vote error:', err.message);
+    res.status(502).json({ error: 'proxy_error', message: 'API temporarily unavailable' });
+  }
+}));
 // ═══ REFERRAL REDIRECT ═══
 app.get('/r/:refcode', (req, res) => {
   res.redirect('/?' + new URLSearchParams({ ref: req.params.refcode }).toString());

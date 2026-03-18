@@ -2729,7 +2729,7 @@ async function confirmNicknameAndEmail() {
   btn.innerHTML = '<span class="spinner"></span>';
 
   try {
-    var res = await fetch('/api/vote/send-code', {
+    var res = await fetch('/api/vote/email/send-code', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: userEmail })
@@ -2848,7 +2848,7 @@ function startOtpTimer() {
 async function resendCode() {
   if (!userEmail) return;
   try {
-    var res = await fetch('/api/vote/send-code', {
+    var res = await fetch('/api/vote/email/send-code', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: userEmail })
@@ -2874,7 +2874,7 @@ async function verifyOTP() {
   btn.innerHTML = '<span class="spinner"></span>';
 
   try {
-    var res = await fetch('/api/vote/verify-code', {
+    var res = await fetch('/api/vote/email/verify-code', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: userEmail, code: code })
