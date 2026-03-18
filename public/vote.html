@@ -1882,6 +1882,9 @@ img{max-width:100%;display:block}
             <button class="copy-btn" onclick="copyVoterId()" id="copy-vid-btn" title="Copy">&#128203;</button>
           </div>
           <div class="voter-id-warning" data-i18n="confirm.saveCode">Save this code — you'll need it to connect your wallet</div>
+          <button class="spoils-shortcut-btn" onclick="goToSpoils()" style="margin-top:16px;display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--void);font-family:var(--font-display);font-size:13px;font-weight:700;border:none;border-radius:12px;cursor:pointer;text-transform:uppercase;letter-spacing:1px;box-shadow:0 4px 20px var(--gold-glow);transition:all .3s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+            💰 <span data-i18n="confirm.goSpoils">ACESSAR MEUS SPOILS →</span>
+          </button>
         </div>
 
         <!-- SHARE & EARN STARS -->
@@ -3929,6 +3932,22 @@ function updateClaimButton(data) {
   claimWrap.style.display = '';
   document.getElementById('claim-btn-text').textContent = 'CLAIM $' + usdValue + ' USDC';
   claimNotice.textContent = available.toLocaleString() + ' ⭐ → $' + usdValue + ' USDC';
+}
+
+function goToSpoils() {
+  // Pre-fill the spoils input with voter ID and scroll to it
+  var voterId = document.getElementById('conf-voter-id');
+  var spoilsInput = document.getElementById('sr-spoils-code');
+  if (voterId && voterId.textContent && spoilsInput) {
+    spoilsInput.value = voterId.textContent.trim();
+  }
+  // Scroll to the spoils section
+  var spoilsSection = document.querySelector('.sr-spoils');
+  if (spoilsSection) {
+    spoilsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Auto-trigger the dashboard load
+    setTimeout(loadSpoilsDashboard, 500);
+  }
 }
 
 async function handleClaimConnectWallet() {
