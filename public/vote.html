@@ -2167,9 +2167,9 @@ img{max-width:100%;display:block}
 <!-- MEUS SPOILS -->
 <div class="sr-spoils">
   <div class="sr-spoils-card">
-    <div class="sr-spoils-title">💰 <span data-i18n="spoils.title">MEUS SPOILS</span></div>
+    <div class="sr-spoils-title">💰 <span data-i18n="spoils.title">MEUS SPOILS</span><div style="font-size:11px;color:var(--text-muted);font-family:var(--font-body);font-weight:400;letter-spacing:0;margin-top:4px;text-transform:none" data-i18n="spoils.subtitle">Digite seu nickname para ver suas estrelas</div></div>
     <div id="sr-spoils-entry">
-      <input type="text" class="sr-spoils-input" id="sr-spoils-code" autocomplete="off" spellcheck="false" placeholder="Claim Code (ex: NOVA-ORBIT-VEGA-3)" data-i18n-placeholder="spoils.codePlaceholder" />
+      <input type="text" class="sr-spoils-input" id="sr-spoils-code" autocomplete="off" spellcheck="false" placeholder="Seu nickname (ex: Dante123)" data-i18n-placeholder="spoils.codePlaceholder" />
       <button class="sr-spoils-btn" onclick="loadSpoilsDashboard()" data-i18n="spoils.access">ACESSAR MEUS SPOILS 💰</button>
     </div>
     <div class="sr-spoils-dashboard" id="sr-spoils-dashboard">
@@ -2454,7 +2454,7 @@ const T = {
     'share.tgDr': '⭐ Star Rush! Vote for the most powerful ship \u2192 ',
     'share.waDr': '⭐ NovaK\u039E Star Rush! Vote & earn stars \u2192 ',
     'spoils.title': 'MY SPOILS',
-    'spoils.codePlaceholder': 'Claim Code (e.g. NOVA-ORBIT-VEGA-3)',
+    'spoils.codePlaceholder': 'Your nickname (e.g. Dante123)',
     'spoils.access': 'ACCESS MY SPOILS \ud83d\udcb0',
     'spoils.statTotal': 'Total',
     'spoils.statAvailable': 'Available',
@@ -2645,7 +2645,7 @@ const T = {
     'share.tgDr': '⭐ Star Rush! Vote na nave mais poderosa \u2192 ',
     'share.waDr': '⭐ NovaK\u039E Star Rush! Vote e ganhe estrelas \u2192 ',
     'spoils.title': 'MEUS SPOILS',
-    'spoils.codePlaceholder': 'Claim Code (ex: NOVA-ORBIT-VEGA-3)',
+    'spoils.codePlaceholder': 'Seu nickname (ex: Dante123)',
     'spoils.access': 'ACESSAR MEUS SPOILS \ud83d\udcb0',
     'spoils.statTotal': 'Total',
     'spoils.statAvailable': 'Dispon\u00edveis',
@@ -2827,7 +2827,7 @@ const T = {
     'share.tgDr': '⭐ \u00A1Misión Interestelar! Vota por la nave m\u00E1s poderosa \u2192 ',
     'share.waDr': '⭐ NOVA GALAXY — Misión Interestelar! Vota y gana estrellas \u2192 ',
     'spoils.title': 'MIS SPOILS',
-    'spoils.codePlaceholder': 'Claim Code (ej: NOVA-ORBIT-VEGA-3)',
+    'spoils.codePlaceholder': 'Tu nickname (ej: Dante123)',
     'spoils.access': 'ACCEDER A MIS SPOILS \ud83d\udcb0',
     'spoils.statTotal': 'Total',
     'spoils.statAvailable': 'Disponibles',
@@ -3201,7 +3201,7 @@ function checkAlreadyVoted() {
           document.getElementById('voter-id-section').style.display = '';
           document.getElementById('conf-wallet-item').style.display = 'none';
         }
-        var refLink = 'galaxy.novake.gg?ref=' + encodeURIComponent(data.nickname);
+        var refLink = 'galaxy.novake.gg/?ref=' + encodeURIComponent(data.nickname);
         document.getElementById('ref-link-url').textContent = refLink;
         setupShareLinks(data.nickname, refLink);
         setState('confirm');
@@ -3459,7 +3459,7 @@ function showConfirmation(data) {
   if (nick) {
     sessionStorage.setItem('nvk_voted_nick', nick);
   }
-  var refLink = 'galaxy.novake.gg?ref=' + encodeURIComponent(nick);
+  var refLink = 'galaxy.novake.gg/?ref=' + encodeURIComponent(nick);
   document.getElementById('ref-link-url').textContent = refLink;
   setupShareLinks(nick, refLink);
   setState('confirm');
@@ -3511,7 +3511,7 @@ function showAlreadyVoted(data) {
 
   var nick = data.nickname || '';
   if (nick) {
-    var refLink = 'galaxy.novake.gg?ref=' + encodeURIComponent(nick);
+    var refLink = 'galaxy.novake.gg/?ref=' + encodeURIComponent(nick);
     document.getElementById('ref-link-url').textContent = refLink;
     setupShareLinks(nick, refLink);
     fetchStarStats(nick);
@@ -4580,8 +4580,18 @@ async function loadSpoilsDashboard() {
   var btn = document.querySelector('[onclick="loadSpoilsDashboard()"]');
   btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>';
   try {
-    var res = await fetch('/api/diamonds/dashboard/' + encodeURIComponent(code));
-    if (!res.ok) { showToast(t('spoils.notFound'),'error'); btn.disabled=false; btn.textContent=t('spoils.access'); return; }
+    var res = await fetch('/api/diamonds/spoils/' + encodeURIComponent(code));
+    if (!res.ok) {
+      var errData = {};
+      try { errData = await res.json(); } catch(e) {}
+      if (res.status === 404) {
+        showToast(t('spoils.notFound') || '❌ Nickname não encontrado. Verifique e tente novamente.', 'error');
+      } else {
+        showToast(t('error_server'), 'error');
+      }
+      btn.disabled=false; btn.textContent=t('spoils.access');
+      return;
+    }
     var data = await res.json();
     currentClaimCode = code;
     currentSpoilsData = data;
@@ -4592,7 +4602,7 @@ async function loadSpoilsDashboard() {
 }
 
 function renderSpoilsDashboard(data) {
-  var avail = (data.total_stars||0) - (data.stars_converted||0);
+  var avail = data.available_stars != null ? data.available_stars : Math.max(0, (data.total_stars||0) - (data.stars_converted||0));
   document.getElementById('sp-total').textContent = (data.total_stars||0).toLocaleString() + '\u2b50';
   document.getElementById('sp-available').textContent = avail.toLocaleString() + '\u2b50';
   document.getElementById('sp-converted').textContent = (data.stars_converted||0).toLocaleString() + '\u2b50';
