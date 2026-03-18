@@ -1567,6 +1567,17 @@ img{max-width:100%;display:block}
     <div id="state-gateway" class="state active">
       <div style="text-align:center;max-width:640px;margin:0 auto;padding:0 16px">
 
+        <!-- 2X FOMO BANNER -->
+        <div id="gw-2x-banner" style="display:none;margin-bottom:16px;padding:12px 20px;background:linear-gradient(135deg,rgba(212,168,67,0.12),rgba(212,168,67,0.04));border:1px solid rgba(212,168,67,0.3);border-radius:12px;animation:goldPulse 3s infinite">
+          <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap">
+            <span style="font-size:18px">⚡</span>
+            <span style="font-family:var(--font-mono);font-weight:700;color:var(--gold);font-size:clamp(14px,2.5vw,18px)">2X STARS</span>
+            <span style="color:var(--text-dim);font-size:13px" data-i18n="gw.2xEnds">ends in</span>
+            <span id="gw-2x-timer" style="font-family:var(--font-mono);font-weight:700;color:#fff;font-size:clamp(14px,2.5vw,18px)">--:--:--</span>
+            <span style="font-size:18px">⚡</span>
+          </div>
+        </div>
+
         <!-- COUNTDOWN (mirrors hero countdown) -->
         <div id="gw-countdown" style="margin-bottom:16px">
           <div class="countdown-wrap">
@@ -1630,7 +1641,24 @@ img{max-width:100%;display:block}
 
         </div>
 
-        <div id="gw-total-votes" style="font-size:13px;color:var(--text-dim);margin-bottom:16px"></div>
+        <div id="gw-total-votes" style="font-size:13px;color:var(--text-dim);margin-bottom:8px"></div>
+
+        <!-- SOCIAL PROOF -->
+        <div id="gw-social-proof" style="display:none;font-size:12px;color:var(--gold);margin-bottom:16px;opacity:0.85">
+          <span>🔥</span> <span id="gw-recent-count">0</span> <span data-i18n="gw.recentVotes">commanders already joined the fleet</span>
+        </div>
+
+        <!-- MILESTONE PROGRESS -->
+        <div id="gw-milestone" style="margin-bottom:20px;padding:12px 16px;background:rgba(212,168,67,0.06);border:1px solid rgba(212,168,67,0.15);border-radius:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span style="font-size:12px;color:var(--text-dim)" data-i18n="gw.nextMilestone">Next milestone</span>
+            <span style="font-family:var(--font-mono);font-size:13px;color:var(--gold);font-weight:700"><span id="gw-ms-current">0</span>/<span id="gw-ms-target">750</span> ⭐</span>
+          </div>
+          <div style="height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden">
+            <div id="gw-ms-bar" style="height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold),rgba(212,168,67,0.5));width:0%;transition:width 1s ease"></div>
+          </div>
+          <div style="text-align:center;margin-top:6px;font-size:11px;color:var(--text-dim)" id="gw-ms-label" data-i18n="gw.milestoneReward">🎁 Mystery reward unlocked at 750 votes</div>
+        </div>
 
         <p style="font-size:14px;color:var(--text-dim);margin-bottom:8px" data-i18n="gateway.startSub">Choose your nickname and vote — no wallet needed</p>
         <button class="confirm-btn enabled" onclick="handleStartVoting()" style="margin-top:8px;font-size:16px;padding:14px 32px" data-i18n="gateway.startBtn">ELEGIR MI NAVE &#8594;</button>
@@ -2283,6 +2311,13 @@ const T = {
     wallet_connected: 'Connected:',
     nick_taken_error: 'Nickname already taken. Try another.',
     'gateway.startSub': 'Choose your nickname and vote — no wallet needed',
+    'gw.2xEnds': 'ends in',
+    'gw.recentVotes': 'commanders already joined the fleet',
+    'gw.nextMilestone': 'Next milestone',
+    'gw.milestoneReward': '🎁 Mystery reward unlocked at 750 votes',
+    'gw.msRemaining': 'votes to unlock mystery reward',
+    'gw.msUnlocked': 'Milestone unlocked! Next target loading...',
+    'gw.votesCast': 'votes cast',
     'gateway.startBtn': 'START VOTING \u2192',
     'email.placeholder': 'Your email address...',
     'email.invalid': '\u26A0 Invalid email format',
@@ -2366,10 +2401,10 @@ const T = {
     'claim.failed': 'Claim failed',
     'claim.rejected': 'Transaction rejected by user',
     'claim.claimed': 'Claimed! TX:',
-    'share.xVoted': 'I just voted on NovaK\u039E Star Rush! ⭐ Vote & earn stars \u2192 ',
+    'share.xVoted': '⏰ 2X STARS ending soon! I just voted on NovaK\u039E Star Rush — vote now & earn double \u2192 ',
     'share.xSuffix': ' #NovaK\u039E #NovaGalaxy #Base',
     'share.tgVoted': '⭐ Star Rush! Vote for the most powerful ship in the galaxy \u2192 ',
-    'share.waVoted': '⭐ NovaK\u039E Star Rush! Vote & earn stars \u2192 ',
+    'share.waVoted': '⏰ 2X STARS ending soon! NovaK\u039E Star Rush — vote & earn double ⭐ \u2192 ',
     'share.xDr': '⭐ Star Rush! Vote & earn stars \u2192 ',
     'share.xDrSuffix': ' #NovaK\u039E #NovaGalaxy',
     'share.tgDr': '⭐ Star Rush! Vote for the most powerful ship \u2192 ',
@@ -2467,6 +2502,13 @@ const T = {
     wallet_connected: 'Conectado:',
     nick_taken_error: 'Nickname j\u00E1 em uso. Tente outro.',
     'gateway.startSub': 'Escolha seu nickname e vote \u2014 sem precisar de wallet',
+    'gw.2xEnds': 'termina em',
+    'gw.recentVotes': 'comandantes já entraram na frota',
+    'gw.nextMilestone': 'Próximo milestone',
+    'gw.milestoneReward': '🎁 Recompensa misteriosa desbloqueada em 750 votos',
+    'gw.msRemaining': 'votos para desbloquear recompensa misteriosa',
+    'gw.msUnlocked': 'Milestone desbloqueado! Próximo alvo carregando...',
+    'gw.votesCast': 'votos registrados',
     'gateway.startBtn': 'COME\u00C7AR A VOTAR \u2192',
     'email.placeholder': 'Seu endere\u00E7o de email...',
     'email.invalid': '\u26A0 Formato de email inv\u00E1lido',
@@ -2550,10 +2592,10 @@ const T = {
     'claim.failed': 'Falha no claim',
     'claim.rejected': 'Transa\u00E7\u00E3o rejeitada pelo usu\u00E1rio',
     'claim.claimed': 'Resgatado! TX:',
-    'share.xVoted': 'Acabei de votar no NovaK\u039E Star Rush! ⭐ Vote e ganhe estrelas \u2192 ',
+    'share.xVoted': '⏰ 2X STARS acabando! Votei no NovaK\u039E Star Rush — vota agora e ganha o dobro \u2192 ',
     'share.xSuffix': ' #NovaK\u039E #NovaGalaxy #Base',
     'share.tgVoted': '⭐ Star Rush! Vote na nave mais poderosa da gal\u00E1xia \u2192 ',
-    'share.waVoted': '⭐ NovaK\u039E Star Rush! Vote e ganhe estrelas \u2192 ',
+    'share.waVoted': '⏰ 2X STARS acabando! NovaK\u039E Star Rush — vota e ganha o dobro ⭐ \u2192 ',
     'share.xDr': '⭐ Star Rush! Vote e ganhe estrelas \u2192 ',
     'share.xDrSuffix': ' #NovaK\u039E #NovaGalaxy',
     'share.tgDr': '⭐ Star Rush! Vote na nave mais poderosa \u2192 ',
@@ -2651,6 +2693,13 @@ const T = {
     wallet_connected: 'Conectado:',
     nick_taken_error: 'Nickname ya en uso. Intenta otro.',
     'gateway.startSub': 'Elige tu nickname y vota \u2014 sin necesidad de wallet',
+    'gw.2xEnds': 'termina en',
+    'gw.recentVotes': 'comandantes ya se unieron a la flota',
+    'gw.nextMilestone': 'Próximo hito',
+    'gw.milestoneReward': '🎁 Recompensa misteriosa desbloqueada en 750 votos',
+    'gw.msRemaining': 'votos para desbloquear recompensa misteriosa',
+    'gw.msUnlocked': '¡Hito desbloqueado! Próximo objetivo cargando...',
+    'gw.votesCast': 'votos emitidos',
     'gateway.startBtn': 'ELEGIR MI NAVE \u2192',
     'email.placeholder': 'Tu correo electr\u00F3nico...',
     'email.invalid': '\u26A0 Formato de email inv\u00E1lido',
@@ -2725,10 +2774,10 @@ const T = {
     'claim.failed': 'Fall\u00F3 el claim',
     'claim.rejected': 'Transacci\u00F3n rechazada por el usuario',
     'claim.claimed': '\u00A1Reclamado! TX:',
-    'share.xVoted': '\u00A1Acabo de votar en NOVA GALAXY — Misión Interestelar! ⭐ Vota y gana estrellas \u2192 ',
+    'share.xVoted': '⏰ \u00A12X STARS terminando! Voté en NovaK\u039E Star Rush — vota ahora y gana el doble \u2192 ',
     'share.xSuffix': ' #NovaK\u039E #NovaGalaxy #Base',
     'share.tgVoted': '⭐ \u00A1Misión Interestelar! Vota por la nave m\u00E1s poderosa de la galaxia \u2192 ',
-    'share.waVoted': '⭐ NOVA GALAXY — Misión Interestelar! Vota y gana estrellas \u2192 ',
+    'share.waVoted': '⏰ \u00A12X STARS terminando! NovaK\u039E Star Rush — vota y gana el doble ⭐ \u2192 ',
     'share.xDr': '⭐ Misión Interestelar! Vota y gana estrellas \u2192 ',
     'share.xDrSuffix': ' #NovaK\u039E #NovaGalaxy',
     'share.tgDr': '⭐ \u00A1Misión Interestelar! Vota por la nave m\u00E1s poderosa \u2192 ',
@@ -3451,8 +3500,10 @@ function updateTotalVotes() {
   // Gateway total
   var gwEl = document.getElementById('gw-total-votes');
   if (gwEl && stats.total > 0) {
-    gwEl.innerHTML = '&#9734; <strong>' + stats.total.toLocaleString() + '</strong> votes cast';
+    gwEl.innerHTML = '&#9734; <strong>' + stats.total.toLocaleString() + '</strong> ' + t('gw.votesCast') || 'votes cast';
   }
+  // Milestone progress
+  updateMilestone(stats.total || 0);
 }
 
 // ═══════════════════════════════════════════════════
@@ -4062,6 +4113,73 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // ═══ 2X COUNTDOWN ═══
+// ═══════════════════════════════════════════════════
+//  GATEWAY FOMO ELEMENTS
+// ═══════════════════════════════════════════════════
+
+// Milestone progress
+var MILESTONES = [250, 500, 750, 1000, 2000, 5000];
+function updateMilestone(total) {
+  var target = MILESTONES.find(function(m) { return m > total; }) || MILESTONES[MILESTONES.length - 1];
+  var bar = document.getElementById('gw-ms-bar');
+  var cur = document.getElementById('gw-ms-current');
+  var tgt = document.getElementById('gw-ms-target');
+  var label = document.getElementById('gw-ms-label');
+  if (bar) bar.style.width = Math.min(100, (total / target) * 100).toFixed(1) + '%';
+  if (cur) cur.textContent = total;
+  if (tgt) tgt.textContent = target;
+  var remaining = target - total;
+  if (label && remaining > 0) {
+    label.textContent = '🎁 ' + remaining + ' ' + (t('gw.msRemaining') || 'votes to unlock mystery reward');
+  } else if (label) {
+    label.textContent = '🎁 ' + (t('gw.msUnlocked') || 'Milestone unlocked! Next target loading...');
+  }
+}
+
+// Gateway 2X multiplier countdown (mirrors SR banner)
+(function initGw2xBanner() {
+  var banner = document.getElementById('gw-2x-banner');
+  var timer = document.getElementById('gw-2x-timer');
+  if (!banner || !timer) return;
+
+  function startGw2x(endISO) {
+    var end = new Date(endISO).getTime();
+    if (!end || isNaN(end) || end <= Date.now()) { banner.style.display = 'none'; return; }
+    function tick() {
+      var diff = end - Date.now();
+      if (diff <= 0) { banner.style.display = 'none'; return; }
+      banner.style.display = 'block';
+      var h = Math.floor(diff / 3600000);
+      var m = Math.floor((diff % 3600000) / 60000);
+      var s = Math.floor((diff % 60000) / 1000);
+      timer.textContent = (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }
+    tick();
+    setInterval(tick, 1000);
+  }
+
+  if (window.MULTIPLIER_END_ISO) { startGw2x(window.MULTIPLIER_END_ISO); return; }
+  fetch('/api/diamonds/multiplier').then(function(r) { return r.json(); }).then(function(d) {
+    if (d && d.multiplier > 1 && d.ends_at) startGw2x(d.ends_at);
+  }).catch(function() {});
+})();
+
+// Social proof — show total with urgency framing
+(function initSocialProof() {
+  var el = document.getElementById('gw-social-proof');
+  var countEl = document.getElementById('gw-recent-count');
+  if (!el || !countEl) return;
+  var observer = new MutationObserver(function() {
+    var total = (stats && stats.total) || 0;
+    if (total > 10) {
+      countEl.textContent = total;
+      el.style.display = 'block';
+    }
+  });
+  var gwTotal = document.getElementById('gw-total-votes');
+  if (gwTotal) observer.observe(gwTotal, { childList: true, subtree: true });
+})();
+
 // Multiplier banner is hidden by default (CSS display:none).
 // Sources (in priority order):
 //   1. window.MULTIPLIER_END_ISO — manual override (set before DOMContentLoaded)
