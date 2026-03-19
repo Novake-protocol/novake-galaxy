@@ -18,9 +18,9 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23080810'/%3E%3Crect x='1' y='1' width='30' height='30' rx='7' fill='none' stroke='%23D4A843' stroke-width='.5' opacity='.3'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='system-ui,-apple-system,sans-serif' font-size='16' font-weight='800' fill='%23D4A843'%3EK%CE%9E%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="image" href="/assets/ships/eclipse/eclipse_hd.jpg">
-<link rel="preload" as="image" href="/assets/ships/aurora/aurora_hd.jpg">
-<link rel="preload" as="image" href="/assets/ships/kraken/kraken_hd.jpg">
+<link rel="preload" as="image" href="/assets/ships/eclipse/eclipse_hd_transp.png">
+<link rel="preload" as="image" href="/assets/ships/aurora/aurora_hd_transp.png">
+<link rel="preload" as="image" href="/assets/ships/kraken/kraken_hd_transp.png">
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@4/dist/fp.min.js" integrity="sha384-krE1YAVuJx0qn+hR6KwuVnQtbZIATYwWHVaIy7nXFZRyOrBxBfg81m+cqtbljaYo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.5/ethers.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -1857,8 +1857,8 @@ img{max-width:100%;display:block}
         <h2 class="confirm-title grad-text" data-i18n="confirm.title">YOUR VOTE HAS BEEN RECORDED</h2>
 
         <!-- Ship visual -->
-        <div id="conf-ship-visual" style="text-align:center;margin:16px auto;display:flex;justify-content:center;">
-          <img id="conf-ship-img" src="" alt="" style="max-width:260px;width:72%;border-radius:12px;display:block;margin:0 auto;object-fit:cover;aspect-ratio:1;box-shadow:0 0 0 1px rgba(212,168,67,.15),0 8px 40px rgba(0,0,0,.6);filter:contrast(1.05) saturate(1.05);">
+        <div id="conf-ship-visual" style="text-align:center;margin:16px auto;display:flex;justify-content:center;background:transparent;">
+          <img id="conf-ship-img" src="" alt="" style="max-width:280px;width:80%;display:block;margin:0 auto;object-fit:contain;filter:drop-shadow(0 0 20px rgba(212,168,67,.25)) drop-shadow(0 4px 16px rgba(0,0,0,.5));">
         </div>
 
         <div class="confirm-detail">
@@ -2976,9 +2976,9 @@ function setConfShipVisual(shipName) {
   if (!img || !container) return;
   var s = (shipName || '').toLowerCase();
   var shipAssets = {
-    eclipse: '/assets/ships/eclipse/eclipse_hd.jpg',
-    aurora: '/assets/ships/aurora/aurora_hd.jpg',
-    kraken: '/assets/ships/kraken/kraken_hd.jpg'
+    eclipse: '/assets/ships/eclipse/eclipse_hd_transp.png',
+    aurora: '/assets/ships/aurora/aurora_hd_transp.png',
+    kraken: '/assets/ships/kraken/kraken_hd_transp.png'
   };
   var shipGlowColors = {
     eclipse: '103,232,249',
