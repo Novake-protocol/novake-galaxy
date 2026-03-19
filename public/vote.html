@@ -72,7 +72,7 @@ img{max-width:100%;display:block}
 .content{position:relative;z-index:1}
 
 /* ═══ HEADER ═══ */
-.header{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:16px 32px;background:rgba(10,10,10,.6);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,.04)}
+.header{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(10,10,10,.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,.04)}
 .header-logo{display:flex;align-items:center;gap:10px}
 .header-logo img{height:36px}
 .header-logo span{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--gold)}
@@ -239,7 +239,7 @@ img{max-width:100%;display:block}
 .lb-rank.gold{color:#FFD700;text-shadow:0 0 10px rgba(255,215,0,.3)}
 .lb-rank.silver{color:#C0C0C0;text-shadow:0 0 10px rgba(192,192,192,.2)}
 .lb-rank.bronze{color:#CD7F32;text-shadow:0 0 10px rgba(205,127,50,.2)}
-.lb-name{flex:1;font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--text)}
+.lb-name{flex:1;font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .lb-you-tag{font-size:11px;color:var(--gold);margin-left:4px;font-weight:700}
 .lb-count{font-family:var(--font-mono);font-size:13px;color:var(--text-dim)}
 .lb-prize{font-size:12px;color:var(--text-muted);text-align:right;min-width:110px}
@@ -384,8 +384,8 @@ img{max-width:100%;display:block}
 .sr-lb{max-width:700px;margin:0 auto 56px}
 .sr-lb-title{font-family:var(--font-display);font-size:16px;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);text-align:center;margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:10px}
 .sr-lb-title .live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;display:inline-block}
-.sr-lb-wrap{background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;padding:8px;backdrop-filter:blur(12px);overflow:visible}
-.sr-lb-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;margin-bottom:2px;transition:all .25s ease}
+.sr-lb-wrap{background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;padding:8px;backdrop-filter:blur(12px);overflow:hidden}
+.sr-lb-row{display:flex;align-items:center;gap:8px;padding:12px 14px;border-radius:12px;margin-bottom:2px;transition:all .25s ease;overflow:hidden;min-width:0}
 .sr-lb-row:hover{background:rgba(212,168,67,.04)}
 .sr-lb-row.top1{background:linear-gradient(135deg,rgba(255,215,0,.08),rgba(255,215,0,.02));border:1px solid rgba(255,215,0,.15)}
 .sr-lb-row.top2{background:linear-gradient(135deg,rgba(192,192,192,.06),rgba(192,192,192,.02));border:1px solid rgba(192,192,192,.10)}
@@ -394,13 +394,13 @@ img{max-width:100%;display:block}
 .sr-lb-rank.r1{color:#FFD700;text-shadow:0 0 12px rgba(255,215,0,.4)}
 .sr-lb-rank.r2{color:#C0C0C0;text-shadow:0 0 10px rgba(192,192,192,.3)}
 .sr-lb-rank.r3{color:#CD7F32;text-shadow:0 0 10px rgba(205,127,50,.3)}
-.sr-lb-name{flex:1;font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--text)}
+.sr-lb-name{flex:1;font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .sr-lb-badge{font-size:11px;padding:3px 10px;border-radius:6px;font-family:var(--font-mono);font-weight:600;letter-spacing:.5px;white-space:nowrap}
 .sr-lb-badge.cadet,.sr-lb-badge.recruiter{background:rgba(59,130,246,.10);color:#60A5FA;border:1px solid rgba(59,130,246,.20)}
 .sr-lb-badge.commander{background:rgba(103,0,211,.10);color:var(--purple-light);border:1px solid rgba(103,0,211,.20)}
 .sr-lb-badge.admiral{background:rgba(212,168,67,.10);color:var(--gold);border:1px solid var(--gold-border)}
 .sr-lb-badge.legend{background:linear-gradient(135deg,rgba(212,168,67,.15),rgba(103,0,211,.15));color:#FFD700;border:1px solid rgba(212,168,67,.3);text-shadow:0 0 8px rgba(255,215,0,.3)}
-.sr-lb-stars{font-family:var(--font-mono);font-size:15px;color:var(--gold);font-weight:700;min-width:100px;text-align:right}
+.sr-lb-stars{font-family:var(--font-mono);font-size:15px;color:var(--gold);font-weight:700;min-width:80px;text-align:right;white-space:nowrap;flex-shrink:0}
 .sr-lb-empty{text-align:center;padding:40px 20px;color:var(--text-muted)}
 
 /* My Balance Section */
@@ -840,7 +840,7 @@ img{max-width:100%;display:block}
   text-shadow: none;
   filter: drop-shadow(0 0 6px rgba(205,127,50,0.3));
 }
-.sr-lb-name { flex: 1; font-family: var(--font-mono); font-size: 14px; font-weight: 600; color: var(--sr-text-primary); }
+.sr-lb-name { flex: 1; font-family: var(--font-mono); font-size: 14px; font-weight: 600; color: var(--sr-text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 .sr-lb-badge {
   font-size: 11px;
   padding: 4px 12px;
@@ -1498,7 +1498,7 @@ img{max-width:100%;display:block}
   .jtf-grid{grid-template-columns:1fr!important}
   .jtf-card{padding:24px 16px 20px}
   .hero h1{font-size:clamp(20px,8vw,34px)!important;letter-spacing:-.5px!important}
-  .hero{padding:80px 12px 20px!important}
+  .hero{padding:88px 12px 20px!important}
   .sr-title{font-size:clamp(18px,6vw,26px)!important}
   .multiplier-banner{font-size:12px!important;padding:12px 16px!important}
   .cd-num{font-size:clamp(22px,7vw,36px)!important}
@@ -1854,8 +1854,8 @@ img{max-width:100%;display:block}
         <h2 class="confirm-title grad-text" data-i18n="confirm.title">YOUR VOTE HAS BEEN RECORDED</h2>
 
         <!-- Ship visual -->
-        <div id="conf-ship-visual" style="text-align:center;margin:20px auto 16px;display:flex;justify-content:center;background:#0A0A0F;border-radius:20px;overflow:hidden;">
-          <img id="conf-ship-img" src="" alt="" style="max-width:320px;width:80%;border-radius:20px;box-shadow:0 0 60px rgba(212,168,67,0.25),0 8px 40px rgba(0,0,0,0.6);display:block;margin:0 auto;object-fit:contain;background:#0A0A0F;mix-blend-mode:multiply;filter:contrast(1.1) brightness(1.05) saturate(1.1);">
+        <div id="conf-ship-visual" style="text-align:center;margin:20px auto 16px;display:flex;justify-content:center;background:linear-gradient(135deg,rgba(103,0,211,.15),rgba(10,10,15,.9));border-radius:20px;padding:8px;">
+          <img id="conf-ship-img" src="" alt="" style="max-width:300px;width:78%;border-radius:16px;box-shadow:0 0 40px rgba(212,168,67,0.2);display:block;margin:0 auto;object-fit:contain;">
         </div>
 
         <div class="confirm-detail">
@@ -3774,14 +3774,17 @@ function getBadgeFromStars(d) {
 }
 
 function updateDrFomo(entries) {
-  var totalStars = 0;
-  var totalReferrers = entries.length;
-  entries.forEach(function(e) { totalStars += (e.total_stars || 0); });
-
-  var tdEl = document.getElementById('sr-total-stars');
-  var trEl = document.getElementById('sr-total-referrers');
-  if (tdEl) animateNumber(tdEl, totalStars);
-  if (trEl) trEl.textContent = totalReferrers.toLocaleString();
+  // Fetch real global totals (all referrers, not just top 20)
+  fetch('/api/diamonds/global-stats')
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(data) {
+      if (!data) return;
+      var tdEl = document.getElementById('sr-total-stars');
+      var trEl = document.getElementById('sr-total-referrers');
+      if (tdEl) animateNumber(tdEl, data.total_stars || 0);
+      if (trEl) animateNumber(trEl, data.total_referrers || 0);
+    })
+    .catch(function() {});
 }
 
 function animateNumber(el, target) {
