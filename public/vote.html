@@ -1854,8 +1854,8 @@ img{max-width:100%;display:block}
         <h2 class="confirm-title grad-text" data-i18n="confirm.title">YOUR VOTE HAS BEEN RECORDED</h2>
 
         <!-- Ship visual -->
-        <div id="conf-ship-visual" style="text-align:center;margin:20px auto 16px;display:flex;justify-content:center;">
-          <img id="conf-ship-img" src="" alt="" style="max-width:320px;width:80%;border-radius:20px;box-shadow:0 0 60px rgba(212,168,67,0.15),0 8px 32px rgba(0,0,0,0.5);display:block;margin:0 auto;object-fit:contain;background:transparent;">
+        <div id="conf-ship-visual" style="text-align:center;margin:20px auto 16px;display:flex;justify-content:center;background:#0A0A0F;border-radius:20px;overflow:hidden;">
+          <img id="conf-ship-img" src="" alt="" style="max-width:320px;width:80%;border-radius:20px;box-shadow:0 0 60px rgba(212,168,67,0.25),0 8px 40px rgba(0,0,0,0.6);display:block;margin:0 auto;object-fit:contain;background:#0A0A0F;mix-blend-mode:multiply;filter:contrast(1.1) brightness(1.05) saturate(1.1);">
         </div>
 
         <div class="confirm-detail">
@@ -3695,11 +3695,10 @@ function initStarDashboard() {
   var nick = selectedNickname || sessionStorage.getItem('nvk_voted_nick');
   if (nick) showDrRefgen(nick);
 
-  // Pre-fill balance input from URL ref or stored nick
+  // Pre-fill balance input ONLY with own nickname (never referredBy — that's someone else's code)
   var balInput = document.getElementById('sr-balance-code');
-  if (balInput) {
-    var prefill = nick || referredBy || '';
-    if (prefill) balInput.value = prefill;
+  if (balInput && nick) {
+    balInput.value = nick;
   }
 
   // Enter key on balance input
@@ -3942,11 +3941,11 @@ function updateClaimButton(data) {
 }
 
 function goToSpoils() {
-  // Pre-fill the spoils input with voter ID and scroll to it
-  var voterId = document.getElementById('conf-voter-id');
+  // Pre-fill the spoils input with own nickname (not voter_id — that's for wallet linking)
   var spoilsInput = document.getElementById('sr-spoils-code');
-  if (voterId && voterId.textContent && spoilsInput) {
-    spoilsInput.value = voterId.textContent.trim();
+  if (spoilsInput) {
+    var ownNick = selectedNickname || sessionStorage.getItem('nvk_voted_nick') || '';
+    if (ownNick) spoilsInput.value = ownNick;
   }
   // Scroll to the spoils section
   var spoilsSection = document.querySelector('.sr-spoils');
