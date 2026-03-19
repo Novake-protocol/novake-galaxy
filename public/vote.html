@@ -216,7 +216,7 @@ img{max-width:100%;display:block}
 .voter-id-warning{font-size:13px;color:var(--gold);margin-bottom:32px;opacity:.8}
 
 /* ═══ REFERRAL SECTION ═══ */
-.referral-section{margin-top:40px;padding:36px 28px;background:var(--card-bg);border:1px solid var(--gold-border);border-radius:20px;text-align:center;backdrop-filter:blur(12px);position:relative;overflow:visible}
+.referral-section{margin-top:40px;padding:28px 16px;background:var(--card-bg);border:1px solid var(--gold-border);border-radius:20px;text-align:center;backdrop-filter:blur(12px);position:relative;overflow:visible}
 .referral-section::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 .ref-title{font-family:var(--font-display);font-size:clamp(16px,2.5vw,22px);font-weight:700;color:var(--gold);margin-bottom:10px}
 .ref-sub{font-size:14px;color:var(--text-dim);max-width:500px;margin:0 auto 24px;line-height:1.6}
@@ -232,10 +232,10 @@ img{max-width:100%;display:block}
 
 .leaderboard{max-width:580px;margin:0 auto;text-align:left;overflow:visible}
 .lb-header{font-family:var(--font-display);font-size:14px;color:var(--text-muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.06);text-align:center}
-.lb-row{display:flex;align-items:center;gap:12px;padding:11px 16px;border-radius:10px;margin-bottom:4px;transition:all .25s ease}
+.lb-row{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;margin-bottom:4px;transition:all .25s ease;overflow:hidden}
 .lb-row:hover{background:rgba(255,255,255,.02)}
 .lb-row.you{background:rgba(212,168,67,.08);border:1px solid var(--gold-border)}
-.lb-rank{font-family:var(--font-mono);font-size:16px;font-weight:700;min-width:36px;text-align:center}
+.lb-rank{font-family:var(--font-mono);font-size:14px;font-weight:700;min-width:28px;text-align:center;flex-shrink:0}
 .lb-rank.gold{color:#FFD700;text-shadow:0 0 10px rgba(255,215,0,.3)}
 .lb-rank.silver{color:#C0C0C0;text-shadow:0 0 10px rgba(192,192,192,.2)}
 .lb-rank.bronze{color:#CD7F32;text-shadow:0 0 10px rgba(205,127,50,.2)}
@@ -308,9 +308,9 @@ img{max-width:100%;display:block}
 .otp-timer{font-family:var(--font-mono);color:var(--gold)}
 
 /* ═══ STAR LEADERBOARD ═══ */
-.star-lb{max-width:620px;margin:0 auto;text-align:left;overflow:visible}
+.star-lb{max-width:100%;margin:0 auto;text-align:left;overflow:hidden}
 .star-lb-header{font-family:var(--font-display);font-size:14px;color:var(--text-muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.06);text-align:center;display:flex;align-items:center;justify-content:center;gap:8px}
-.star-lb-row{display:flex;align-items:center;gap:12px;padding:11px 16px;border-radius:10px;margin-bottom:4px;transition:all .25s ease;overflow:visible}
+.star-lb-row{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;margin-bottom:4px;transition:all .25s ease;overflow:hidden}
 .star-lb-row:hover{background:rgba(255,255,255,.02)}
 .star-lb-row.you{background:rgba(212,168,67,.08);border:1px solid var(--gold-border)}
 .star-badge{font-size:11px;padding:3px 8px;border-radius:6px;font-family:var(--font-mono);font-weight:600;letter-spacing:.5px}
@@ -318,7 +318,7 @@ img{max-width:100%;display:block}
 .star-badge.commander{background:rgba(103,0,211,.1);color:var(--purple-light);border:1px solid rgba(103,0,211,.2)}
 .star-badge.admiral{background:rgba(212,168,67,.1);color:var(--gold);border:1px solid var(--gold-border)}
 .star-badge.legend{background:linear-gradient(135deg,rgba(212,168,67,.15),rgba(103,0,211,.15));color:#fff;border:1px solid rgba(212,168,67,.3)}
-.star-count{font-family:var(--font-mono);font-size:14px;color:var(--gold);font-weight:600;min-width:90px;text-align:right;padding-right:4px;overflow:visible;white-space:nowrap}
+.star-count{font-family:var(--font-mono);font-size:13px;color:var(--gold);font-weight:600;min-width:72px;text-align:right;white-space:nowrap;flex-shrink:0}
 
 /* ═══ STARS AWARDED ═══ */
 .stars-awarded{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,rgba(212,168,67,.12),rgba(103,0,211,.08));border:1px solid var(--gold-border);border-radius:14px;padding:14px 28px;margin:20px 0;font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--gold);animation:scaleIn .5s cubic-bezier(.2,.8,.3,1.2)}
@@ -475,6 +475,9 @@ img{max-width:100%;display:block}
   .sr-lb-rank{min-width:28px;font-size:14px}
   .sr-lb-row{gap:6px;padding:10px 10px}
   .sr-lb-name{font-size:13px}
+  .star-badge{display:none}
+  .star-count{min-width:60px;font-size:12px}
+  .lb-rank{font-size:13px;min-width:24px}
 }
 
     .sr-countdown-banner {
