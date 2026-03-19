@@ -395,7 +395,7 @@ img{max-width:100%;display:block}
 .sr-lb-rank.r2{color:#C0C0C0;text-shadow:0 0 10px rgba(192,192,192,.3)}
 .sr-lb-rank.r3{color:#CD7F32;text-shadow:0 0 10px rgba(205,127,50,.3)}
 .sr-lb-name{flex:1;font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
-.sr-lb-badge{font-size:11px;padding:3px 10px;border-radius:6px;font-family:var(--font-mono);font-weight:600;letter-spacing:.5px;white-space:nowrap}
+.sr-lb-badge{font-size:11px;padding:3px 8px;border-radius:6px;font-family:var(--font-mono);font-weight:600;letter-spacing:.5px;white-space:nowrap}
 .sr-lb-badge.cadet,.sr-lb-badge.recruiter{background:rgba(59,130,246,.10);color:#60A5FA;border:1px solid rgba(59,130,246,.20)}
 .sr-lb-badge.commander{background:rgba(103,0,211,.10);color:var(--purple-light);border:1px solid rgba(103,0,211,.20)}
 .sr-lb-badge.admiral{background:rgba(212,168,67,.10);color:var(--gold);border:1px solid var(--gold-border)}
@@ -470,8 +470,11 @@ img{max-width:100%;display:block}
   .sr-balance-stats{gap:10px}
   .sr-bal-stat{min-width:90px;padding:10px 14px}
   .sr-lb-row{padding:10px 12px;gap:8px}
-  .sr-lb-stars{min-width:70px;font-size:13px}
-  .sr-lb-badge{font-size:10px;padding:2px 6px}
+  .sr-lb-stars{min-width:60px;font-size:12px}
+  .sr-lb-badge{display:none}
+  .sr-lb-rank{min-width:28px;font-size:14px}
+  .sr-lb-row{gap:6px;padding:10px 10px}
+  .sr-lb-name{font-size:13px}
 }
 
     .sr-countdown-banner {
@@ -1513,7 +1516,7 @@ img{max-width:100%;display:block}
 @keyframes tickerSlide{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
 
 /* ═══ DEADLINE BAR ═══ */
-#deadline-bar{width:100%;padding:10px 16px;text-align:center;font-family:var(--font-mono);font-size:13px;color:var(--text);background:rgba(103,0,211,.18);border-bottom:1px solid rgba(103,0,211,.35);z-index:101;position:relative;letter-spacing:.5px}
+#deadline-bar{width:100%;padding:8px 12px;text-align:center;font-family:var(--font-mono);font-size:12px;color:var(--text);background:rgba(103,0,211,.18);border-bottom:1px solid rgba(103,0,211,.35);z-index:101;position:relative;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #deadline-bar.urgency{background:rgba(212,168,67,.10);border-bottom-color:var(--gold-border)}
 #deadline-bar.critical{animation:deadlinePulse 1.5s ease-in-out infinite}
 @keyframes deadlinePulse{0%,100%{opacity:1}50%{opacity:.7}}
@@ -1854,8 +1857,8 @@ img{max-width:100%;display:block}
         <h2 class="confirm-title grad-text" data-i18n="confirm.title">YOUR VOTE HAS BEEN RECORDED</h2>
 
         <!-- Ship visual -->
-        <div id="conf-ship-visual" style="text-align:center;margin:20px auto 16px;display:flex;justify-content:center;background:linear-gradient(135deg,rgba(103,0,211,.15),rgba(10,10,15,.9));border-radius:20px;padding:8px;">
-          <img id="conf-ship-img" src="" alt="" style="max-width:300px;width:78%;border-radius:16px;box-shadow:0 0 40px rgba(212,168,67,0.2);display:block;margin:0 auto;object-fit:contain;">
+        <div id="conf-ship-visual" style="text-align:center;margin:16px auto;display:flex;justify-content:center;">
+          <img id="conf-ship-img" src="" alt="" style="max-width:260px;width:72%;border-radius:12px;display:block;margin:0 auto;object-fit:cover;aspect-ratio:1;box-shadow:0 0 0 1px rgba(212,168,67,.15),0 8px 40px rgba(0,0,0,.6);filter:contrast(1.05) saturate(1.05);">
         </div>
 
         <div class="confirm-detail">
@@ -1871,6 +1874,41 @@ img{max-width:100%;display:block}
             <div class="confirm-item-label" data-i18n="confirm.wallet">Wallet</div>
             <div class="confirm-item-value" id="conf-wallet"></div>
           </div>
+        </div>
+
+        <!-- VOTE PERCENTAGE BARS + HYPE -->
+        <div id="conf-vote-bars" style="margin:20px 0 0;padding:16px 0 0;border-top:1px solid rgba(255,255,255,.06)">
+          <div style="font-family:var(--font-display);font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:14px;text-align:center" data-i18n="confirm.battleStatus">⚔️ BATTLE STATUS</div>
+          <div id="conf-bar-eclipse" style="margin-bottom:10px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+              <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--eclipse-c,#67E8F9)">ECLIPSE</span>
+              <span id="conf-pct-eclipse" style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--eclipse-c,#67E8F9)">0%</span>
+            </div>
+            <div style="height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden"><div id="conf-fill-eclipse" style="height:100%;border-radius:3px;background:linear-gradient(90deg,#67E8F9,rgba(103,232,249,.4));transition:width 1s ease;width:0%"></div></div>
+          </div>
+          <div id="conf-bar-aurora" style="margin-bottom:10px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+              <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--aurora-c,#F59E0B)">AURORA</span>
+              <span id="conf-pct-aurora" style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--aurora-c,#F59E0B)">0%</span>
+            </div>
+            <div style="height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden"><div id="conf-fill-aurora" style="height:100%;border-radius:3px;background:linear-gradient(90deg,#F59E0B,rgba(245,158,11,.4));transition:width 1s ease;width:0%"></div></div>
+          </div>
+          <div id="conf-bar-kraken" style="margin-bottom:4px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+              <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--kraken-c,#A78BFA)">KRAKEN</span>
+              <span id="conf-pct-kraken" style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--kraken-c,#A78BFA)">0%</span>
+            </div>
+            <div style="height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden"><div id="conf-fill-kraken" style="height:100%;border-radius:3px;background:linear-gradient(90deg,#A78BFA,rgba(167,139,250,.4));transition:width 1s ease;width:0%"></div></div>
+          </div>
+          <div id="conf-leading-msg" style="text-align:center;margin-top:10px;font-size:12px;color:var(--text-dim);font-family:var(--font-mono)"></div>
+        </div>
+
+        <!-- PRÊMIO SURPRESA -->
+        <div style="margin:20px 0;padding:18px 20px;background:linear-gradient(135deg,rgba(212,168,67,.08),rgba(103,0,211,.06));border:1px solid rgba(212,168,67,.2);border-radius:16px;text-align:center;position:relative;overflow:hidden">
+          <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,67,.4),transparent)"></div>
+          <div style="font-size:24px;margin-bottom:6px">🎁</div>
+          <div style="font-family:var(--font-display);font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px" data-i18n="confirm.surprisePrize">PRÊMIO SURPRESA</div>
+          <p style="font-size:12px;color:var(--text-dim);line-height:1.5;margin:0" data-i18n="confirm.surprisePrizeDesc">A nave vencedora libera recompensas exclusivas para quem votou nela. Fique ligado — o anúncio é na hora do encerramento. 🚀</p>
         </div>
 
         <!-- STARS AWARDED -->
@@ -2906,6 +2944,32 @@ var lastBalanceData = null; // Stores last star balance check result
 var lastBalanceCode = null; // Stores the referrer code used
 var referredBy = null;
 
+
+function updateConfBars() {
+  fetch('/api/vote/stats')
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(stats) {
+      if (!stats || !stats.total) return;
+      var total = stats.total || 1;
+      var ships = {eclipse: stats.eclipse||0, aurora: stats.aurora||0, kraken: stats.kraken||0};
+      var leader = Object.keys(ships).reduce(function(a,b){ return ships[a]>ships[b]?a:b; });
+      ['eclipse','aurora','kraken'].forEach(function(ship) {
+        var pct = Math.round((ships[ship] / total) * 100);
+        var fillEl = document.getElementById('conf-fill-' + ship);
+        var pctEl = document.getElementById('conf-pct-' + ship);
+        if (fillEl) fillEl.style.width = pct + '%';
+        if (pctEl) pctEl.textContent = pct + '%';
+      });
+      var leadMsg = document.getElementById('conf-leading-msg');
+      if (leadMsg) {
+        var leadNames = {eclipse:'ECLIPSE', aurora:'AURORA', kraken:'KRAKEN'};
+        var pctLead = Math.round((ships[leader]/total)*100);
+        leadMsg.innerHTML = '⚡ ' + leadNames[leader] + ' lidera com ' + pctLead + '% dos votos — ' + total.toLocaleString() + ' comandantes votaram';
+      }
+    })
+    .catch(function(){});
+}
+
 function setConfShipVisual(shipName) {
   var img = document.getElementById('conf-ship-img');
   var container = document.getElementById('conf-ship-visual');
@@ -3205,6 +3269,7 @@ function checkAlreadyVoted() {
         document.getElementById('ref-link-url').textContent = refLink;
         setupShareLinks(data.nickname, refLink);
         setState('confirm');
+        updateConfBars();
         showDrRefgen(data.nickname);
         fetchStarStats(data.nickname);
         fetchStarLeaderboard(data.nickname);
@@ -3463,6 +3528,7 @@ function showConfirmation(data) {
   document.getElementById('ref-link-url').textContent = refLink;
   setupShareLinks(nick, refLink);
   setState('confirm');
+  updateConfBars();
   showDrRefgen(nick);
 
   // Confetti celebration
@@ -3518,6 +3584,7 @@ function showAlreadyVoted(data) {
     fetchStarLeaderboard(nick);
   }
   setState('confirm');
+  updateConfBars();
 }
 
 function setupShareLinks(nick, refLink) {
@@ -4244,7 +4311,7 @@ function initDeadlineBar() {
     var hh = Math.floor((diff % 86400000) / 3600000);
     var mm = Math.floor((diff % 3600000) / 60000);
     var totalVotes = (stats && stats.total) ? stats.total.toLocaleString() : '0';
-    bar.innerHTML = '\u23F3 VOTING CLOSES IN: <strong>' + dd + '</strong>d <strong>' + String(hh).padStart(2,'0') + '</strong>h <strong>' + String(mm).padStart(2,'0') + '</strong>m \u2014 <strong>' + totalVotes + '</strong> votes cast so far';
+    bar.innerHTML = '\u23F3 <strong>' + dd + '</strong>d <strong>' + String(hh).padStart(2,'0') + '</strong>h <strong>' + String(mm).padStart(2,'0') + '</strong>m \u2014 \u26A1 <strong>' + totalVotes + '</strong> votes';
 
     bar.classList.remove('urgency', 'critical');
     if (diff < 3600000) {
